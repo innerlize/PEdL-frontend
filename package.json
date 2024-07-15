@@ -18,12 +18,16 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "start:no-browser": "cross-env BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint \"src/**/*.{js,jsx,ts,tsx,json}\" --fix",
-    "format": "prettier  \"src/**/*.{js,jsx,ts,tsx,json}\" --write",
-    "prepare": "husky"
+    "lint": "eslint \"src/**/*.{js,jsx,ts,tsx,json}\" \"cypress/**/*.{js,jsx,ts,tsx,json}\" --fix",
+    "format": "prettier  \"src/**/*.{js,jsx,ts,tsx,json}\" \"cypress/**/*.{js,jsx,ts,tsx,json}\" --write",
+    "prepare": "husky",
+    "cy:run": "npx cypress run",
+    "cy:open": "npx cypress open",
+    "test:ui": "start-server-and-test start:no-browser http://127.0.0.1:3000 cy:run"
   },
   "eslintConfig": {
     "extends": [
