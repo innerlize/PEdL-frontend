@@ -3,7 +3,17 @@
 module.exports = {
 	content: ['./src/**/*.{js,jsx,ts,tsx}'],
 	theme: {
-		extend: {},
+		extend: {
+			colors: {
+				primary: '#00C896',
+				secondary: '#00BCFF',
+				accent: '#3C3C3C',
+				neutral: '#121212'
+			}
+		},
+		fontFamily: {
+			roboto: ['Roboto', 'sans-serif']
+		}
 	},
-	plugins: [],
+	plugins: []
 };
