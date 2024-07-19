@@ -12,6 +12,6 @@ export default [
 	pluginReactConfig,
 	{ settings: { react: { version: 'detect' } } },
 	{
-		rules: { 'react/react-in-jsx-scope': 0 }
+		rules: { 'react/react-in-jsx-scope': 0, 'react/prop-types': 0 }
 	}
 ];
