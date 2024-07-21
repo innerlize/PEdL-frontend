@@ -17,7 +17,7 @@ export const DesktopNavbar: React.FC = () => {
 					key={index}
 					to={route.path}
 					className={({ isActive }) =>
-						`font-roboto font-bold text-[18px] 2xl:text-[24px] ${isActive ? 'text-white' : 'text-accent'}`
+						`font-roboto font-bold text-[18px] 2xl:text-[24px] transition-colors ${isActive ? 'text-white' : 'text-accent hover:text-neutral'}`
 					}>
 					{route.label}
 				</NavLink>
