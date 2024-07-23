@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Twirl as Hamburger } from 'hamburger-react';
 import { Route } from '../../types/Navbar';
+import { disablePageScroll, enablePageScroll } from 'scroll-lock';
 
 interface MenuProps {
 	routes: Route[];
@@ -32,6 +33,12 @@ interface MobileNavbarProps {
 
 export const MobileNavbar: React.FC<MobileNavbarProps> = ({ routes }) => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+	if (isMenuOpen) {
+		disablePageScroll();
+	} else {
+		enablePageScroll();
+	}
 
 	return (
 		<div data-test='mobile-navbar' className='size-full'>
