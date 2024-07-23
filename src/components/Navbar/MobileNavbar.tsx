@@ -18,7 +18,7 @@ const Menu: React.FC<MenuProps> = ({ routes }) => {
 					key={index}
 					to={route.path}
 					className={({ isActive }) =>
-						`font-roboto font-bold text-[40px] md:text-[64px] ${isActive ? 'text-white' : 'text-accent'}`
+						`font-roboto font-bold text-[40px] md:text-[64px] transition-colors ${isActive ? 'text-white' : 'text-accent hover:text-neutral'}`
 					}>
 					{route.label}
 				</NavLink>
