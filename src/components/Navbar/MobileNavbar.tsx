@@ -12,7 +12,7 @@ const Menu: React.FC<MenuProps> = ({ routes }) => {
 	return (
 		<div
 			data-test='mobile-navbar-menu'
-			className='absolute flex flex-col items-center justify-center gap-[38px] size-full top-0 left-0 bg-primary z-10'>
+			className='absolute flex flex-col items-center justify-center gap-[38px] w-screen h-screen top-0 left-0 bg-primary z-10'>
 			{routes.map((route, index) => (
 				<NavLink
 					key={index}
