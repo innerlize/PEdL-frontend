@@ -1,15 +1,13 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Twirl as Hamburger } from 'hamburger-react';
+import { Route } from '../../types/Navbar';
 
-const Menu = () => {
-	const routes = [
-		{ path: '/home', label: 'Home' },
-		{ path: '/about', label: 'About' },
-		{ path: '/portfolio', label: 'Portfolio' },
-		{ path: '/contact', label: 'Contact' }
-	];
+interface MenuProps {
+	routes: Route[];
+}
 
+const Menu: React.FC<MenuProps> = ({ routes }) => {
 	return (
 		<div
 			data-test='mobile-navbar-menu'
@@ -28,7 +26,11 @@ const Menu = () => {
 	);
 };
 
-export const MobileNavbar: React.FC = () => {
+interface MobileNavbarProps {
+	routes: Route[];
+}
+
+export const MobileNavbar: React.FC<MobileNavbarProps> = ({ routes }) => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 
 	return (
@@ -43,7 +45,7 @@ export const MobileNavbar: React.FC = () => {
 				/>
 			</div>
 
-			{isMenuOpen && <Menu />}
+			{isMenuOpen && <Menu routes={routes} />}
 		</div>
 	);
 };

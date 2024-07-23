@@ -1,13 +1,11 @@
 import { NavLink } from 'react-router-dom';
+import { Route } from '../../types/Navbar';
 
-export const DesktopNavbar: React.FC = () => {
-	const routes = [
-		{ path: '/home', label: 'Home' },
-		{ path: '/about', label: 'About' },
-		{ path: '/portfolio', label: 'Portfolio' },
-		{ path: '/contact', label: 'Contact' }
-	];
+interface DesktopNavbarProps {
+	routes: Route[];
+}
 
+export const DesktopNavbar: React.FC<DesktopNavbarProps> = ({ routes }) => {
 	return (
 		<div
 			data-test='desktop-navbar'
