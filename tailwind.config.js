@@ -9,10 +9,11 @@ module.exports = {
 				secondary: '#00BCFF',
 				accent: '#3C3C3C',
 				neutral: '#121212'
+			},
+			fontFamily: {
+				roboto: ['Roboto', 'sans-serif'],
+				montserrat: ['Montserrat', 'sans-serif']
 			}
-		},
-		fontFamily: {
-			roboto: ['Roboto', 'sans-serif']
 		}
 	},
 	plugins: []
