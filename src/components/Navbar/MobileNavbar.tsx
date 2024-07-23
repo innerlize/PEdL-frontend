@@ -1,25 +1,24 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { Twirl as Hamburger } from 'hamburger-react';
+import { Route } from '../../types/Navbar';
+import { disablePageScroll, enablePageScroll } from 'scroll-lock';
 
-const Menu = () => {
-	const routes = [
-		{ path: '/home', label: 'Home' },
-		{ path: '/about', label: 'About' },
-		{ path: '/portfolio', label: 'Portfolio' },
-		{ path: '/contact', label: 'Contact' }
-	];
+interface MenuProps {
+	routes: Route[];
+}
 
+const Menu: React.FC<MenuProps> = ({ routes }) => {
 	return (
 		<div
 			data-test='mobile-navbar-menu'
-			className='absolute flex flex-col items-center justify-center gap-[38px] size-full top-0 left-0 bg-primary z-10'>
+			className='absolute flex flex-col items-center justify-center gap-[38px] w-screen h-screen top-0 left-0 bg-primary z-10'>
 			{routes.map((route, index) => (
 				<NavLink
 					key={index}
 					to={route.path}
 					className={({ isActive }) =>
-						`font-roboto font-bold text-[40px] md:text-[64px] ${isActive ? 'text-white' : 'text-accent'}`
+						`font-roboto font-bold text-[40px] md:text-[64px] transition-colors ${isActive ? 'text-white' : 'text-accent hover:text-neutral'}`
 					}>
 					{route.label}
 				</NavLink>
@@ -28,8 +27,18 @@ const Menu = () => {
 	);
 };
 
-export const MobileNavbar: React.FC = () => {
+interface MobileNavbarProps {
+	routes: Route[];
+}
+
+export const MobileNavbar: React.FC<MobileNavbarProps> = ({ routes }) => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+	if (isMenuOpen) {
+		disablePageScroll();
+	} else {
+		enablePageScroll();
+	}
 
 	return (
 		<div data-test='mobile-navbar' className='size-full'>
@@ -43,7 +52,7 @@ export const MobileNavbar: React.FC = () => {
 				/>
 			</div>
 
-			{isMenuOpen && <Menu />}
+			{isMenuOpen && <Menu routes={routes} />}
 		</div>
 	);
 };

@@ -71,7 +71,7 @@ describe('Navbar Component', () => {
 		cy.get('nav').should('have.css', 'height', '120px');
 
 		cy.viewport(1280, 800);
-		cy.get('nav').should('have.css', 'height', '72px');
+		cy.get('nav').should('have.css', 'height', '52px');
 
 		cy.viewport(1600, 900);
 		cy.get('nav').should('have.css', 'height', '72px');
