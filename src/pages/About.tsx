@@ -1,7 +1,7 @@
 import { SkillsContainer } from '../components/About/SkillsContainer';
 import { SectionHeader } from '../components/SectionHeader';
 
-export const AboutPage: React.FC = () => {
+const AboutPage: React.FC = () => {
 	const title = (
 		<>
 			My <span className='text-primary'>Skills</span> &{' '}
@@ -20,3 +20,5 @@ export const AboutPage: React.FC = () => {
 		</div>
 	);
 };
+
+export default AboutPage;
