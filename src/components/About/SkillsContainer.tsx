@@ -3,7 +3,7 @@ import { SkillTip } from './SkillTip';
 
 export const SkillsContainer: React.FC = () => {
 	return (
-		<div className='flex flex-col gap-[130px] xl:flex-row'>
+		<div className='flex flex-col gap-[130px] mt-[100px] xl:flex-row xl:mt-[130px]'>
 			<TechnicalSkills />
 
 			<LeadershipSkills />
