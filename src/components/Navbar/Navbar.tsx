@@ -14,7 +14,7 @@ const Navbar: React.FC = () => {
 	];
 
 	return (
-		<nav className='sticky top-0 w-full h-[90px] bg-primary md:h-[120px] xl:h-[52px] 2xl:h-[72px]'>
+		<nav className='sticky z-10 top-0 w-full h-[90px] bg-primary md:h-[120px] xl:h-[52px] 2xl:h-[72px]'>
 			{isTabletOrMobile ? (
 				<MobileNavbar routes={routes} />
 			) : (
