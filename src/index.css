@@ -22,3 +22,7 @@
 
 /* React Medium Image Zoom */
 @import 'react-medium-image-zoom/dist/styles.css';
+
+.custom-fullscreen-dialog [data-rmiz-modal-overlay='visible'] {
+	@apply bg-neutral;
+}
