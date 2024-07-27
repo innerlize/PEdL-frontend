@@ -20,7 +20,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({
 
 	return (
 		<div data-test={`project-card-${id}`} className='size-full'>
-			<Link to={`/project/${id}`}>
+			<Link to={`/portfolio/project/${id}`}>
 				<img
 					src={thumbnail}
 					alt={isLoaded ? `${name}'s project thumbnail` : ''}
