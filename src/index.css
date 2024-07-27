@@ -10,5 +10,15 @@
 /* Swiper */
 @import 'swiper/css';
 @import 'swiper/css/navigation';
+
+.images-carousel
+	.swiper-slide:not(.swiper-slide-next):not(.swiper-slide-active) {
+	@apply opacity-0;
+}
+
+.swiper-slide {
+	box-sizing: border-box;
+}
+
 /* React Medium Image Zoom */
 @import 'react-medium-image-zoom/dist/styles.css';
