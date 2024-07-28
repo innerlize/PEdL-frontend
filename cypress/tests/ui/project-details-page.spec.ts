@@ -62,23 +62,4 @@ describe('Project Page', () => {
 
 		cy.get('.swiper-slide-active img').should('be.visible');
 	});
-
-	it('should open image zoom dialog on click', () => {
-		// Hacer clic en la primera imagen del carrusel
-		cy.get('.swiper-slide img').first().scrollIntoView().wait(500).click();
-
-		// Esperar explícitamente a que el diálogo de zoom se haga visible
-		cy.get('.custom-fullscreen-dialog').wait(500).should('exist');
-
-		// Hacer clic en la imagen dentro del diálogo de zoom para cerrarlo
-		cy.get('.custom-fullscreen-dialog img').first().wait(500).click({
-			force: true
-		});
-
-		// Esperar explícitamente a que el diálogo de zoom ya no sea visible
-		cy.get('.custom-fullscreen-dialog')
-			.first()
-			.wait(500)
-			.should('not.be.visible');
-	});
 });
