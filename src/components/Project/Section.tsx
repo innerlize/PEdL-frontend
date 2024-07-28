@@ -4,7 +4,7 @@ interface SectionProps {
 }
 
 export const Section: React.FC<SectionProps> = ({ title, children }) => (
-	<div>
+	<div data-test='project-details-section'>
 		<h4 className='text-2xl font-semibold text-primary md:max-xl:text-[32px]'>
 			{title}
 		</h4>
