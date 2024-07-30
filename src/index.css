@@ -26,3 +26,6 @@
 .custom-fullscreen-dialog [data-rmiz-modal-overlay='visible'] {
 	@apply bg-neutral;
 }
+
+/* React International Phone */
+@import 'react-international-phone/style.css';
