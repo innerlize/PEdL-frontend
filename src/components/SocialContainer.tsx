@@ -1,20 +1,22 @@
-import { socials } from '../../data/socials';
-import { SocialType } from '../../types/Social';
-import { SocialBubble } from '../SocialBubble';
+import { socials } from '../data/socials';
+import { SocialType } from '../types/Social';
+import { SocialBubble } from './SocialBubble';
 
 interface SocialContainerProps {
 	socialsToDisplay: SocialType[];
+	className?: string;
 }
 
 export const SocialContainer: React.FC<SocialContainerProps> = ({
-	socialsToDisplay
+	socialsToDisplay,
+	className
 }) => {
 	const socialsData = socials.filter(social =>
 		socialsToDisplay.includes(social.type)
 	);
 
 	return (
-		<div className='flex justify-center gap-2.5 md:gap-10 xl:absolute xl:top-[30px] 2xl:top-[45px]'>
+		<div className={className}>
 			{socialsData.map(social => (
 				<SocialBubble
 					key={social.type}

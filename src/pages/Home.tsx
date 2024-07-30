@@ -1,7 +1,7 @@
 import Typewriter from 'typewriter-effect';
 import { FaDownload } from 'react-icons/fa';
 import homeImage from '../assets/images/Pablo.png';
-import { SocialContainer } from '../components/Home/SocialContainer';
+import { SocialContainer } from '../components/SocialContainer';
 import { SocialType } from '../types/Social';
 import { SvgElements } from '../components/Home/SvgElements';
 import { ButtonsContainer } from '../components/Home/ButtonsContainer';
@@ -29,7 +29,10 @@ const HomePage: React.FC = () => {
 	return (
 		<div className='relative min-h-screen bg-neutral p-[30px] overflow-hidden md:p-[70px] xl:flex xl:flex-row-reverse xl:justify-center xl:items-center xl:py-[30px] xl:gap-[100px] 2xl:py-[45px] 2xl:justify-between 2xl:px-[216px]'>
 			<div className='flex flex-col items-center gap-[74px] xl:w-[40%]'>
-				<SocialContainer socialsToDisplay={socialsToDisplay} />
+				<SocialContainer
+					socialsToDisplay={socialsToDisplay}
+					className='flex justify-center gap-2.5 md:gap-10 xl:absolute xl:top-[30px] 2xl:top-[45px]'
+				/>
 
 				<div
 					data-test='home-image'
