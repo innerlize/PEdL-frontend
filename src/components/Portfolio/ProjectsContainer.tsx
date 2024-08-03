@@ -1,9 +1,15 @@
 import { ProjectCard } from './ProjectCard';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode } from 'swiper/modules';
-import { projects } from '../../data/projects';
+import { Project } from '../../types/Portfolio';
 
-export const ProjectsContainer: React.FC = () => {
+interface ProjectsContainerProps {
+	projects: Project[];
+}
+
+export const ProjectsContainer: React.FC<ProjectsContainerProps> = ({
+	projects
+}) => {
 	return (
 		<div className='mx-[-30px] mt-[40px] md:mx-[-70px] md:mt-[130px] xl:mx-[-127px] xl:mt-[60px] 2xl:mx-[-227px] 2xl:mt-[80px]'>
 			<Swiper
