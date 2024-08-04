@@ -10,7 +10,7 @@ export const LinksList: React.FC<LinksListProps> = ({ links }) => {
 			{links.map((link, index) => (
 				<li key={index}>
 					<a
-						href={link.href}
+						href={link.url}
 						target='_blank'
 						rel='noreferrer'
 						className='text-secondary transition-colors hover:text-primary cursor-pointer'>
