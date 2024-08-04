@@ -19,10 +19,10 @@ const ContactPage: React.FC = () => {
 	);
 
 	return (
-		<div>
+		<div className='w-full'>
 			<SectionHeader title={title} subtitle={subtitle} />
 
-			<div className='font-roboto xl:flex xl:gap-[100px] xl:mt-[60px] 2xl:mt-[100px]'>
+			<div className='font-roboto xl:flex xl:justify-center xl:gap-[100px] xl:mt-[60px] 2xl:mt-[100px]'>
 				<Form />
 
 				<div className='flex flex-col gap-[50px] xl:gap-[30px] 2xl:w-[500px]'>

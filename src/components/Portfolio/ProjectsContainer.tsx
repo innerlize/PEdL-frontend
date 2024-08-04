@@ -11,7 +11,7 @@ export const ProjectsContainer: React.FC<ProjectsContainerProps> = ({
 	projects
 }) => {
 	return (
-		<div className='mx-[-30px] mt-[40px] md:mx-[-70px] md:mt-[130px] xl:mx-[-127px] xl:mt-[60px] 2xl:mx-[-227px] 2xl:mt-[80px]'>
+		<div className='mx-[-30px] md:mx-[-70px] xl:mx-[-127px] 2xl:mx-[-227px]'>
 			<Swiper
 				slidesPerView={'auto'}
 				spaceBetween={25}

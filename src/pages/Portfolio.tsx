@@ -20,10 +20,12 @@ const PortfolioPage: React.FC = () => {
 	);
 
 	return (
-		<div className='w-full'>
+		<div className='flex flex-col w-full'>
 			<SectionHeader title={title} subtitle={subtitle} />
 
-			<ProjectsContainer />
+			<div className='flex-1 mt-[40px] md:mt-[130px] xl:mt-[60px] 2xl:mt-[80px]'>
+				{renderContent()}
+			</div>
 		</div>
 	);
 };
