@@ -39,7 +39,7 @@ export const ProjectsContainer: React.FC<ProjectsContainerProps> = ({
 						<ProjectCard
 							key={project.id}
 							id={project.id}
-							name={project.title}
+							name={project.name}
 							thumbnail={project.thumbnail}
 						/>
 					</SwiperSlide>
