@@ -1,18 +1,31 @@
+import { project } from '../../fixtures/project';
+import { projects } from '../../fixtures/projects';
+
 describe('Project Page', () => {
 	beforeEach(() => {
+		cy.intercept('GET', '/api/projects', { body: projects }).as('GET_PROJECTS');
+		cy.intercept('GET', '/api/projects/1', { body: project }).as('GET_PROJECT');
+
 		cy.visit('/portfolio');
 
+		cy.wait('@GET_PROJECTS');
+
 		cy.get('.swiper-slide').first().click();
+
+		cy.wait('@GET_PROJECT');
 	});
 
 	it('should display the project page', () => {
-		cy.get('h1').contains('Metegol').should('be.visible');
-		cy.get('div').contains('01/05/2012').should('be.visible');
-		cy.get('div').contains('31/01/2013').should('be.visible');
+		cy.get('h1').contains(project.name).should('be.visible');
+
+		cy.get('div').contains('09/08/2001').should('be.visible');
+		cy.get('div').contains('05/18/2033').should('be.visible');
 	});
 
 	it('should navigate back to the portfolio page', () => {
 		cy.get('a').contains('Back').click();
+
+		cy.wait('@GET_PROJECTS');
 
 		cy.url().should('include', '/portfolio');
 	});
@@ -45,17 +58,19 @@ describe('Project Page', () => {
 			.scrollIntoView();
 
 		cy.get('a')
-			.contains('Link 1')
-			.should('have.attr', 'href', 'https://example.com');
+			.contains(project.links[0].label)
+			.should('have.attr', 'href', project.links[0].url);
 
 		cy.get('a')
-			.contains('Link 2')
-			.should('have.attr', 'href', 'https://example.com');
+			.contains(project.links[1].label)
+			.should('have.attr', 'href', project.links[1].url);
 	});
 
 	it('should display images in the carousel and swipe through them', () => {
+		cy.viewport(408, 777);
+
 		cy.get('.swiper').should('be.visible');
-		cy.get('.swiper-slide').should('have.length', 6);
+		cy.get('.swiper-slide').should('have.length', project.media.images.length);
 
 		cy.get('.swiper-button-next').click();
 		cy.get('.swiper-button-prev').click();
