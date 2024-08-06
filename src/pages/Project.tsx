@@ -42,7 +42,7 @@ const ProjectPage: React.FC = () => {
 
 					<div className='flex flex-col gap-[115px] pt-[98px] md:max-xl:gap-[72px]'>
 						<div className='flex flex-col items-center md:gap-5'>
-							<h1 className='text-[64px] font-bold text-primary uppercase md:text-8xl'>
+							<h1 className='text-[64px] font-bold text-primary text-center uppercase md:text-8xl'>
 								{project.name}
 							</h1>
 
