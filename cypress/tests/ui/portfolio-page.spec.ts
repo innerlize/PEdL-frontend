@@ -7,6 +7,8 @@ describe('PortfolioPage', () => {
 		cy.intercept('GET', '/api/projects/1', { body: project }).as('GET_PROJECT');
 
 		cy.visit('/portfolio');
+
+		cy.wait('@GET_PROJECTS');
 	});
 
 	it('should display the correct title and subtitle', () => {
@@ -19,8 +21,6 @@ describe('PortfolioPage', () => {
 	});
 
 	it('should render the ProjectsContainer component', () => {
-		cy.wait('@GET_PROJECTS');
-
 		cy.get('.swiper').should('exist');
 
 		cy.get('.swiper-slide').should('have.length', 4);
@@ -29,8 +29,6 @@ describe('PortfolioPage', () => {
 	});
 
 	it('should display project cards with correct thumbnails', () => {
-		cy.wait('@GET_PROJECTS');
-
 		projects.forEach(project => {
 			cy.get(`[data-test="project-card-${project.id}"] img`)
 				.should('exist')
@@ -39,8 +37,6 @@ describe('PortfolioPage', () => {
 	});
 
 	it('should navigate to project details page on clicking a project card', () => {
-		cy.wait('@GET_PROJECTS');
-
 		cy.get('.swiper-slide').first().click();
 
 		cy.wait('@GET_PROJECT');
