@@ -47,8 +47,13 @@ const ProjectPage: React.FC = () => {
 							</h1>
 
 							<div className='text-xl md:text-2xl'>
-								<span>{convertTimestampToDate(project.start_date)}</span> -{' '}
-								<span>{convertTimestampToDate(project.end_date)}</span>
+								<span data-test='project-start_date'>
+									{convertTimestampToDate(project.start_date)}
+								</span>{' '}
+								-{' '}
+								<span data-test='project-end_date'>
+									{convertTimestampToDate(project.end_date)}
+								</span>
 							</div>
 						</div>
 

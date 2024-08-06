@@ -18,8 +18,13 @@ describe('Project Page', () => {
 	it('should display the project page', () => {
 		cy.get('h1').contains(project.name).should('be.visible');
 
-		cy.get('div').contains('09/08/2001').should('be.visible');
-		cy.get('div').contains('05/18/2033').should('be.visible');
+		cy.get('[data-test="project-start_date"]')
+			.should('contain', '09/08/2001')
+			.should('be.visible');
+
+		cy.get('[data-test="project-end_date"]')
+			.should('contain', '05/18/2033')
+			.should('be.visible');
 	});
 
 	it('should navigate back to the portfolio page', () => {
