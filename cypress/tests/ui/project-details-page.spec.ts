@@ -18,14 +18,12 @@ describe('Project Page', () => {
 	it('should display the project page', () => {
 		cy.get('h1').contains(project.name).should('be.visible');
 
-		cy.wait(2000);
-
 		cy.get('[data-test="project-start_date"]')
-			.should('contain', '09/08/2001')
+			.should('have.text', '09/08/2001')
 			.and('be.visible');
 
 		cy.get('[data-test="project-end_date"]')
-			.should('contain', '05/18/2033')
+			.should('have.text', '05/18/2033')
 			.and('be.visible');
 	});
 
