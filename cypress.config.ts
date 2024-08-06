@@ -21,5 +21,6 @@ export default defineConfig({
 		},
 		baseUrl: process.env.CYPRESS_BASE_URL_PREFIX,
 		specPattern: 'cypress/tests/**/*.spec.{js,jsx,ts,tsx}'
-	}
+	},
+	chromeWebSecurity: false
 });

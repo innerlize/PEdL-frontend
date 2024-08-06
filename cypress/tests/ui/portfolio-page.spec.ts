@@ -1,8 +1,14 @@
-import { projects } from '../../../src/data/projects';
+import { project } from '../../fixtures/project';
+import { projects } from '../../fixtures/projects';
 
 describe('PortfolioPage', () => {
 	beforeEach(() => {
+		cy.intercept('GET', '/api/projects', { body: projects }).as('GET_PROJECTS');
+		cy.intercept('GET', '/api/projects/1', { body: project }).as('GET_PROJECT');
+
 		cy.visit('/portfolio');
+
+		cy.wait('@GET_PROJECTS');
 	});
 
 	it('should display the correct title and subtitle', () => {
@@ -16,7 +22,10 @@ describe('PortfolioPage', () => {
 
 	it('should render the ProjectsContainer component', () => {
 		cy.get('.swiper').should('exist');
-		cy.get('.swiper-slide').should('have.length', projects.length);
+
+		cy.get('.swiper-slide').should('have.length', 4);
+
+		cy.get('[data-test="project-card-1"]').should('be.visible');
 	});
 
 	it('should display project cards with correct thumbnails', () => {
@@ -29,6 +38,9 @@ describe('PortfolioPage', () => {
 
 	it('should navigate to project details page on clicking a project card', () => {
 		cy.get('.swiper-slide').first().click();
-		cy.url().should('include', `/project/${projects[0].id}`);
+
+		cy.wait('@GET_PROJECT');
+
+		cy.url().should('include', `/project/${project.id}`);
 	});
 });

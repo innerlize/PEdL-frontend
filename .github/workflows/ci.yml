@@ -29,3 +29,4 @@ jobs:
         run: npm run test:ui
         env:
           CYPRESS_BASE_URL_PREFIX: ${{ secrets.CYPRESS_BASE_URL_PREFIX }}
+          REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
