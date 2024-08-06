@@ -1,4 +1,4 @@
-import { format } from 'date-fns';
+import { format, toZonedTime } from 'date-fns-tz';
 import { Timestamp } from '../types/Portfolio';
 
 export const convertTimestampToDate = ({
@@ -9,7 +9,9 @@ export const convertTimestampToDate = ({
 
 	const date = new Date(milliseconds);
 
-	const formattedDate = format(date, 'MM/dd/yyyy');
+	const zonedDate = toZonedTime(date, 'UTC');
+
+	const formattedDate = format(zonedDate, 'MM/dd/yyyy');
 
 	return formattedDate;
 };
