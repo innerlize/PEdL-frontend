@@ -22,11 +22,11 @@ describe('Project Page', () => {
 
 		cy.get('[data-test="project-start_date"]')
 			.should('contain', '09/08/2001')
-			.should('be.visible');
+			.and('be.visible');
 
 		cy.get('[data-test="project-end_date"]')
 			.should('contain', '05/18/2033')
-			.should('be.visible');
+			.and('be.visible');
 	});
 
 	it('should navigate back to the portfolio page', () => {
