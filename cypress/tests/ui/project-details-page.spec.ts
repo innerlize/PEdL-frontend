@@ -19,7 +19,7 @@ describe('Project Page', () => {
 		cy.get('h1').contains(project.name).should('be.visible');
 
 		cy.get('[data-test="project-start_date"]')
-			.should('have.text', '09/08/2001')
+			.should('have.text', '09/09/2001')
 			.and('be.visible');
 
 		cy.get('[data-test="project-end_date"]')
