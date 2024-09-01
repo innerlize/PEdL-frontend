@@ -8,7 +8,8 @@ module.exports = {
 				primary: '#00C896',
 				secondary: '#00BCFF',
 				accent: '#3C3C3C',
-				neutral: '#121212'
+				neutral: '#121212',
+				warning: '#CC3333'
 			},
 			fontFamily: {
 				roboto: ['Roboto', 'sans-serif'],
