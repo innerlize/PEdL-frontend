@@ -6,6 +6,7 @@ import { CTACard } from '../../components/Admin/CTACard';
 import { FaProjectDiagram } from 'react-icons/fa';
 import { FaHandshakeSimple } from 'react-icons/fa6';
 import { StatCard } from '../../components/Admin/StatCard';
+import { Link } from 'react-router-dom';
 
 const AdminHomePage: React.FC = () => {
 	const title = (
@@ -48,7 +49,9 @@ const AdminHomePage: React.FC = () => {
 			</div>
 
 			<div className='flex justify-center gap-5 text-[15px] text-semibold mt-[40px] underline md:max-xl:text-xl md:mt-[50px]'>
-				<a className='cursor-pointer'>View my projects</a>
+				<Link to='/admin-panel/portfolio' className='cursor-pointer'>
+					View my projects
+				</Link>
 
 				<a className='cursor-pointer'>View my partners</a>
 			</div>
