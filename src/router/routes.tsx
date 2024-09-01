@@ -6,6 +6,8 @@ import PortfolioPage from '../pages/Portfolio';
 import ProjectPage from '../pages/Project';
 import ContactPage from '../pages/Contact';
 import AdminHomePage from '../pages/Admin/Home';
+import AdminLayout from '../components/Admin/Layout/Layout';
+import AdminPortfolioPage from '../pages/Admin/Portfolio';
 
 export const router = createBrowserRouter([
 	{
@@ -36,5 +38,14 @@ export const router = createBrowserRouter([
 	{
 		path: '/admin-panel/',
 		element: <AdminHomePage />
+	},
+	{
+		element: <AdminLayout />,
+		children: [
+			{
+				path: '/admin-panel/portfolio',
+				element: <AdminPortfolioPage />
+			}
+		]
 	}
 ]);
