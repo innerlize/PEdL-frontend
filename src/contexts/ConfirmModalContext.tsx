@@ -1,5 +1,5 @@
 import React, { createContext, useState, ReactNode } from 'react';
-import { ConfirmModal } from '../components/Admin/Portfolio/ConfirmModal';
+import { ConfirmModal } from '../components/Admin/ConfirmModal';
 
 interface ConfirmModalContextValues {
 	isVisible: boolean;
