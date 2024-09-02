@@ -8,6 +8,7 @@ import ContactPage from '../pages/Contact';
 import AdminHomePage from '../pages/Admin/Home';
 import AdminLayout from '../components/Admin/Layout/Layout';
 import AdminPortfolioPage from '../pages/Admin/Portfolio';
+import AdminPartnersPage from '../pages/Admin/Partners';
 
 export const router = createBrowserRouter([
 	{
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
 			{
 				path: '/admin-panel/portfolio',
 				element: <AdminPortfolioPage />
+			},
+			{
+				path: '/admin-panel/partners',
+				element: <AdminPartnersPage />
 			}
 		]
 	}
