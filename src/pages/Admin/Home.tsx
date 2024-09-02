@@ -53,7 +53,9 @@ const AdminHomePage: React.FC = () => {
 					View my projects
 				</Link>
 
-				<a className='cursor-pointer'>View my partners</a>
+				<Link to='/admin-panel/partners' className='cursor-pointer'>
+					View my partners
+				</Link>
 			</div>
 
 			<div className='flex justify-center gap-2.5 mt-auto'>
