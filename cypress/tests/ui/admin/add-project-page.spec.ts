@@ -120,13 +120,10 @@ describe('Admin Add Project Page', () => {
 		cy.get('.react-player__preview')
 			.should('be.visible')
 			.invoke('attr', 'style')
-			.then(style => {
-				cy.wait(3000).then(() => {
-					expect(style).to.contain(
-						'background-image: url("https://i.ytimg.com/vi/a5uQMwRMHcs/hqdefault.jpg")'
-					);
-				});
-			});
+			.should(
+				'include',
+				'background-image: url("https://i.ytimg.com/vi/a5uQMwRMHcs/hqdefault.jpg")'
+			);
 	});
 
 	it('should show an error for an invalid video URL', () => {
