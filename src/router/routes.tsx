@@ -10,6 +10,7 @@ import AdminLayout from '../components/Admin/Layout/Layout';
 import AdminPortfolioPage from '../pages/Admin/Portfolio';
 import AdminPartnersPage from '../pages/Admin/Partners';
 import AdminAddProjectPage from '../pages/Admin/AddProject';
+import AdminAddPartnerPage from '../pages/Admin/AddPartner';
 
 export const router = createBrowserRouter([
 	{
@@ -55,6 +56,10 @@ export const router = createBrowserRouter([
 			{
 				path: '/admin-panel/project/add',
 				element: <AdminAddProjectPage />
+			},
+			{
+				path: '/admin-panel/partners/add',
+				element: <AdminAddPartnerPage />
 			}
 		]
 	}
