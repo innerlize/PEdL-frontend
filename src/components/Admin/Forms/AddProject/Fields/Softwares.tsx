@@ -5,12 +5,12 @@ import {
 	FieldArray,
 	useFormikContext
 } from 'formik';
-import { getRandomHexColor } from '../../../../utils/getRandomHexColor';
-import { SoftwarePill } from '../../../../types/AddProject';
-import { AdminPill } from './InputFieldContent/Pill';
-import { AdminInputFieldHeader } from './InputFieldContent/InputFieldHeader';
-import { AdminSimpleInputType } from './InputTypes/SimpleInputType';
-import { AdminFieldWrapper } from './InputFieldContent/FieldWrapper';
+import { getRandomHexColor } from '../../../../../utils/getRandomHexColor';
+import { SoftwarePill } from '../../../../../types/AddProject';
+import { AdminPill } from '../../Pill';
+import { AdminInputFieldHeader } from '../../InputFieldHeader';
+import { AdminSimpleInputType } from '../../Inputs/SimpleInput';
+import { AdminFieldWrapper } from '../../FieldWrapper';
 
 const AdminSoftwaresField = () => {
 	const { setFieldError } = useFormikContext();

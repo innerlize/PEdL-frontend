@@ -1,8 +1,8 @@
 import React from 'react';
 import { ErrorMessage, useField } from 'formik';
-import { AdminSimpleInputType } from './InputTypes/SimpleInputType';
-import { AdminInputFieldHeader } from './InputFieldContent/InputFieldHeader';
-import { AdminFieldWrapper } from './InputFieldContent/FieldWrapper';
+import { AdminSimpleInputType } from '../../Inputs/SimpleInput';
+import { AdminInputFieldHeader } from '../../InputFieldHeader';
+import { AdminFieldWrapper } from '../../FieldWrapper';
 
 export const AdminProjectNameField: React.FC = () => {
 	const [field] = useField('projectName');

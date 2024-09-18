@@ -5,11 +5,11 @@ import {
 	FieldArray,
 	useFormikContext
 } from 'formik';
-import { AdminInputFieldHeader } from './InputFieldContent/InputFieldHeader';
-import { AdminSimpleInputType } from './InputTypes/SimpleInputType';
-import { AdminVideoPreviewBox } from './InputFieldContent/VideoPreviewBox';
+import { AdminInputFieldHeader } from '../../InputFieldHeader';
+import { AdminSimpleInputType } from '../../Inputs/SimpleInput';
+import { AdminVideoPreviewBox } from '../../VideoPreviewBox';
 import ReactPlayer from 'react-player';
-import { AdminFieldWrapper } from './InputFieldContent/FieldWrapper';
+import { AdminFieldWrapper } from '../../FieldWrapper';
 
 export const AdminMediaVideosField: React.FC = () => {
 	const { setFieldError } = useFormikContext();

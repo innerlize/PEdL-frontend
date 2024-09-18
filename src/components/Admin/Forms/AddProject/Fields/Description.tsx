@@ -1,8 +1,8 @@
 import { ErrorMessage, useField } from 'formik';
 import React from 'react';
-import { AdminTextAreaInputType } from './InputTypes/TextAreaInputType';
-import { AdminInputFieldHeader } from './InputFieldContent/InputFieldHeader';
-import { AdminFieldWrapper } from './InputFieldContent/FieldWrapper';
+import { AdminTextAreaInputType } from '../../Inputs/TextAreaInput';
+import { AdminInputFieldHeader } from '../../InputFieldHeader';
+import { AdminFieldWrapper } from '../../FieldWrapper';
 
 export const AdminDescriptionField: React.FC = () => {
 	const [field] = useField('description');
