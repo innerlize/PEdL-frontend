@@ -36,8 +36,7 @@ const AdminHomePage: React.FC = () => {
 					subtitle='Got something cool? Add your latest creation!'
 					redirectTo='/admin-panel/project/add'
 					icon={<FaProjectDiagram className='size-full' />}
-					backgroundColor='bg-primary'
-					hoverBackgroundColor='bg-[#00C886]'
+					className='bg-primary hover:bg-[#00C886]'
 				/>
 
 				<CTACard
@@ -45,8 +44,7 @@ const AdminHomePage: React.FC = () => {
 					subtitle='Got a new business buddy? Add them to the crew!'
 					redirectTo='/admin-panel/partners/add'
 					icon={<FaHandshakeSimple className='size-full' />}
-					backgroundColor='bg-secondary'
-					hoverBackgroundColor='bg-[#00A9E5]'
+					className='bg-secondary hover:bg-[#00A9E5]'
 				/>
 			</div>
 

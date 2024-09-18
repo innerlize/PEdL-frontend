@@ -1,12 +1,12 @@
 import { Link } from 'react-router-dom';
+import clsx from 'clsx';
 
 interface CTACardProps {
 	title: string;
 	subtitle: string;
 	redirectTo: string;
 	icon: JSX.Element;
-	backgroundColor: string;
-	hoverBackgroundColor: string;
+	className?: string;
 }
 
 export const CTACard: React.FC<CTACardProps> = ({
@@ -14,14 +14,16 @@ export const CTACard: React.FC<CTACardProps> = ({
 	subtitle,
 	redirectTo,
 	icon,
-	backgroundColor,
-	hoverBackgroundColor
+	className
 }) => {
 	return (
 		<Link to={redirectTo}>
 			<div
 				data-test='admin-CTACard'
-				className={`flex items-center justify-center gap-5 px-[28px] py-[30px] ${backgroundColor} rounded-[3px] cursor-pointer transition-color hover:${hoverBackgroundColor} md:max-xl:w-[470px] md:max-xl:px-[58px] md:py-[40px] 2xl:p-[58px]`}>
+				className={clsx(
+					'flex items-center justify-center gap-5 px-[28px] py-[30px] rounded-[3px] cursor-pointer transition-colors md:max-xl:w-[470px] md:max-xl:px-[58px] md:py-[40px] 2xl:p-[58px]',
+					className
+				)}>
 				<div className='flex flex-col gap-2.5 w-[191px] text-left md:w-[243px] 2xl:gap-3'>
 					<p className='text-2xl font-black md:max-xl:text-4xl 2xl:text-[32px]'>
 						{title}
