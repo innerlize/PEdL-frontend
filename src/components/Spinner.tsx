@@ -1,5 +1,9 @@
 import { PuffLoader } from 'react-spinners';
 
-export const Spinner: React.FC = () => {
-	return <PuffLoader color='#00C896' />;
+interface SpinnerProps {
+	color: string;
+}
+
+export const Spinner: React.FC<SpinnerProps> = ({ color }) => {
+	return <PuffLoader color={color} />;
 };
