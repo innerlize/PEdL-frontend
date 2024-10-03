@@ -1,4 +1,4 @@
-describe('Admin Add Partner Page', () => {
+describe('Admin - Add Partner Page', () => {
 	beforeEach(() => {
 		cy.visit('/admin-panel/partners/add');
 	});

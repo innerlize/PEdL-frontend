@@ -1,4 +1,4 @@
-describe('Admin Add Project Page', () => {
+describe('Admin - Add Project Page', () => {
 	beforeEach(() => {
 		cy.visit('/admin-panel/project/add');
 	});
