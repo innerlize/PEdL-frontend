@@ -1,22 +1,44 @@
-// ***********************************************************
-// This example support/index.js is processed and
-// loaded automatically before your test files.
-//
-// This is a great place to put global configuration and
-// behavior that modifies Cypress.
-//
-// You can change the location of this file or turn off
-// automatically serving support files with the
-// 'supportFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/configuration
-// ***********************************************************
-
 import '@cypress/code-coverage/support';
-
-// Import commands.js using ES2015 syntax:
 import './commands';
 
-// Alternatively you can use CommonJS syntax:
-// require('./commands')
+import { initializeApp } from 'firebase/app';
+import { getAuth, connectAuthEmulator } from 'firebase/auth';
+import * as http from 'http';
+
+const checkEmulatorHub = async (): Promise<boolean> => {
+	const emulatorHubHost = Cypress.env('FIREBASE_EMULATOR_HUB_HOST');
+
+	return new Promise(resolve => {
+		http
+			.get(`${emulatorHubHost}/emulators`, res => {
+				resolve(res.statusCode === 200);
+			})
+			.on('error', () => resolve(false));
+	});
+};
+
+const fbConfig = {
+	apiKey: Cypress.env('FIREBASE_API_KEY') || 'defaultApiKey',
+	authDomain: Cypress.env('FIREBASE_AUTH_DOMAIN') || 'defaultAuthDomain',
+	projectId: 'demo-project'
+};
+
+const app = initializeApp(fbConfig);
+const auth = getAuth(app);
+
+const startEmulator = async () => {
+	const emulatorHubRunning = await checkEmulatorHub();
+
+	if (!emulatorHubRunning) {
+		throw new Error('Cypress needs to connect to a Firebase Emulator');
+	}
+
+	const authEmulatorUrl =
+		Cypress.env('FIREBASE_AUTH_EMULATOR_URL') || 'http://localhost:9099';
+
+	connectAuthEmulator(auth, authEmulatorUrl);
+};
+
+startEmulator();
+
+export { auth };
