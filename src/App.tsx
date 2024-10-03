@@ -3,7 +3,6 @@ import TextAreaProvider from './contexts/TextAreaContext';
 import ConfirmModalProvider from './contexts/ConfirmModalContext';
 import { RouterProvider } from 'react-router-dom';
 import { router } from './router/routes';
-import { AuthProvider } from './contexts/AuthContext';
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -16,13 +15,11 @@ const queryClient = new QueryClient({
 function App() {
 	return (
 		<QueryClientProvider client={queryClient}>
-			<AuthProvider>
-				<ConfirmModalProvider>
-					<TextAreaProvider>
-						<RouterProvider router={router} />
-					</TextAreaProvider>
-				</ConfirmModalProvider>
-			</AuthProvider>
+			<ConfirmModalProvider>
+				<TextAreaProvider>
+					<RouterProvider router={router} />
+				</TextAreaProvider>
+			</ConfirmModalProvider>
 		</QueryClientProvider>
 	);
 }

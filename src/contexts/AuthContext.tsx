@@ -7,6 +7,7 @@ import {
 } from '../config/firebase';
 import { revokeToken, verifyAdminAccess } from '../api/auth';
 import { AxiosError } from 'axios';
+import { Outlet } from 'react-router-dom';
 
 interface AuthContextType {
 	signInWithGoogle: () => Promise<void>;
@@ -22,9 +23,7 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 	undefined
 );
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
-	children
-}) => {
+export const AuthProvider: React.FC = () => {
 	const [user, setUser] = useState<FirebaseUser | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -103,7 +102,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
 				error,
 				setError
 			}}>
-			{loading ? <p>Loading...</p> : children}
+			{loading ? <p>Loading...</p> : <Outlet />}
 		</AuthContext.Provider>
 	);
 };
