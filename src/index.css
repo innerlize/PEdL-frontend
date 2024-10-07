@@ -29,3 +29,9 @@
 
 /* React International Phone */
 @import 'react-international-phone/style.css';
+
+/* React Photo View */
+@import 'react-photo-view/dist/react-photo-view.css';
+
+/* React Toastify */
+@import 'react-toastify/dist/ReactToastify.css';

@@ -14,8 +14,14 @@ module.exports = {
 			fontFamily: {
 				roboto: ['Roboto', 'sans-serif'],
 				montserrat: ['Montserrat', 'sans-serif']
+			},
+			textShadow: {
+				sm: '0 0 2px rgba(0, 0, 0, 1)',
+				md: '0 0 6px rgba(0, 0, 0, 1)',
+				lg: '0 0 10px rgba(0, 0, 0, 1)',
+				none: 'none'
 			}
 		}
 	},
-	plugins: []
+	plugins: [require('tailwindcss-textshadow')]
 };
