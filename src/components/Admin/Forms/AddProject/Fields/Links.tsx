@@ -5,11 +5,11 @@ import {
 	FieldArray,
 	useFormikContext
 } from 'formik';
-import { AdminPill } from './InputFieldContent/Pill';
-import { getRandomHexColor } from '../../../../utils/getRandomHexColor';
-import { AdminSimpleInputType } from './InputTypes/SimpleInputType';
-import { AdminInputFieldHeader } from './InputFieldContent/InputFieldHeader';
-import { AdminFieldWrapper } from './InputFieldContent/FieldWrapper';
+import { AdminPill } from '../../Pill';
+import { getRandomHexColor } from '../../../../../utils/getRandomHexColor';
+import { AdminSimpleInputType } from '../../Inputs/SimpleInput';
+import { AdminInputFieldHeader } from '../../InputFieldHeader';
+import { AdminFieldWrapper } from '../../FieldWrapper';
 
 interface Link {
 	label: string;

@@ -1,8 +1,8 @@
-interface AdminAddProjectHeaderProps {
+interface AdminFormPageHeader {
 	title: string;
 }
 
-export const AdminAddProjectHeader: React.FC<AdminAddProjectHeaderProps> = ({
+export const AdminFormPageHeader: React.FC<AdminFormPageHeader> = ({
 	title
 }) => {
 	return (

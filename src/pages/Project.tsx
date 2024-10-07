@@ -24,7 +24,7 @@ const ProjectPage: React.FC = () => {
 		<div className='relative flex flex-col min-w-screen min-h-screen p-[30px] font-roboto text-white bg-neutral md:p-[70px] xl:py-[52px] xl:px-[127px] 2xl:py-[60px] 2xl:px-[295px]'>
 			{isLoading && (
 				<div className='flex justify-center items-center flex-1'>
-					<Spinner />
+					<Spinner color='#00C896' />
 				</div>
 			)}
 

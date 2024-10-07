@@ -1,15 +1,15 @@
 import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
-import AdminSoftwaresField from './InputFields/Softwares';
-import { AdminAddProjectFormData } from '../../../types/AddProject';
-import { AdminProjectNameField } from './InputFields/ProjectName';
-import { AdminCustomerNameField } from './InputFields/CustomerName';
-import { AdminDescriptionField } from './InputFields/Description';
-import { AdminThumbnailField } from './InputFields/Thumbnail';
-import { AdminMediaImagesField } from './InputFields/MediaImages';
-import { AdminMediaVideosField } from './InputFields/MediaVideos';
-import AdminLinksField from './InputFields/Links';
-import { Spinner } from '../../Spinner';
+import AdminSoftwaresField from './Fields/Softwares';
+import { AdminAddProjectFormData } from '../../../../types/AddProject';
+import { AdminProjectNameField } from './Fields/ProjectName';
+import { AdminCustomerNameField } from './Fields/CustomerName';
+import { AdminDescriptionField } from './Fields/Description';
+import { AdminThumbnailField } from './Fields/Thumbnail';
+import { AdminMediaImagesField } from './Fields/MediaImages';
+import { AdminMediaVideosField } from './Fields/MediaVideos';
+import AdminLinksField from './Fields/Links';
+import { Spinner } from '../../../Spinner';
 import { toast, ToastContainer } from 'react-toastify';
 
 const validationSchema = Yup.object({
@@ -97,7 +97,7 @@ export const AdminAddProjectForm = () => {
 							type='submit'
 							className={`flex justify-center items-center w-[203px] h-[48px] mx-auto mt-[30px] font-roboto text-xl font-bold rounded-[3px] ${isSubmitting ? '' : 'bg-primary'} md:text-2xl`}
 							disabled={isSubmitting}>
-							{isSubmitting ? <Spinner /> : 'Create project'}
+							{isSubmitting ? <Spinner color='#00C896' /> : 'Create project'}
 						</button>
 					</Form>
 				)}

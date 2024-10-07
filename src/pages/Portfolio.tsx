@@ -35,7 +35,7 @@ const PortfolioPage: React.FC = () => {
 		if (isLoading) {
 			return (
 				<div className='size-full flex justify-center items-center'>
-					<Spinner />
+					<Spinner color='#00C896' />
 				</div>
 			);
 		}

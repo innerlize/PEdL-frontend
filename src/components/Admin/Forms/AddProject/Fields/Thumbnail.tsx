@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { ErrorMessage, useField } from 'formik';
-import { AdminSimpleInputType } from './InputTypes/SimpleInputType';
-import { AdminInputFieldHeader } from './InputFieldContent/InputFieldHeader';
-import { AdminFieldWrapper } from './InputFieldContent/FieldWrapper';
-import { AdminImagePreviewBox } from './InputFieldContent/ImagePreviewBox';
+import { AdminSimpleInputType } from '../../Inputs/SimpleInput';
+import { AdminInputFieldHeader } from '../../InputFieldHeader';
+import { AdminFieldWrapper } from '../../FieldWrapper';
+import { AdminImagePreviewBox } from '../../ImagePreviewBox';
 import { PhotoProvider } from 'react-photo-view';
-import { AdminImageBrokenElement } from './InputFieldContent/ImageBrokenElement';
-import { validateImageUrl } from '../../../../utils/validateImageUrl';
+import { AdminImageBrokenElement } from '../../ImageBrokenElement';
+import { validateImageUrl } from '../../../../../utils/validateImageUrl';
 
 export const AdminThumbnailField: React.FC = () => {
 	const [thumbnail, setThumbnail] = useState<string>('');

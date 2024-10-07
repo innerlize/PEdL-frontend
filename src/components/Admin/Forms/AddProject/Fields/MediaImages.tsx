@@ -5,13 +5,13 @@ import {
 	FieldArray,
 	useFormikContext
 } from 'formik';
-import { AdminSimpleInputType } from './InputTypes/SimpleInputType';
-import { AdminInputFieldHeader } from './InputFieldContent/InputFieldHeader';
-import { AdminImagePreviewBox } from './InputFieldContent/ImagePreviewBox';
+import { AdminSimpleInputType } from '../../Inputs/SimpleInput';
+import { AdminInputFieldHeader } from '../../InputFieldHeader';
+import { AdminImagePreviewBox } from '../../ImagePreviewBox';
 import { PhotoProvider } from 'react-photo-view';
-import { AdminImageBrokenElement } from './InputFieldContent/ImageBrokenElement';
-import { validateImageUrl } from '../../../../utils/validateImageUrl';
-import { AdminFieldWrapper } from './InputFieldContent/FieldWrapper';
+import { AdminImageBrokenElement } from '../../ImageBrokenElement';
+import { validateImageUrl } from '../../../../../utils/validateImageUrl';
+import { AdminFieldWrapper } from '../../FieldWrapper';
 
 export const AdminMediaImagesField: React.FC = () => {
 	const { setFieldError } = useFormikContext();
