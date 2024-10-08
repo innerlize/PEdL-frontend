@@ -1,7 +1,7 @@
 import '@cypress/code-coverage/support';
 import './commands';
 
-import { initializeApp } from 'firebase/app';
+import { FirebaseOptions, initializeApp } from 'firebase/app';
 import { getAuth, connectAuthEmulator } from 'firebase/auth';
 import * as http from 'http';
 
@@ -17,9 +17,8 @@ const checkEmulatorHub = async (): Promise<boolean> => {
 	});
 };
 
-const fbConfig = {
-	apiKey: Cypress.env('FIREBASE_API_KEY') || 'defaultApiKey',
-	authDomain: Cypress.env('FIREBASE_AUTH_DOMAIN') || 'defaultAuthDomain',
+const fbConfig: FirebaseOptions = {
+	apiKey: 'demo-key',
 	projectId: 'demo-project'
 };
 

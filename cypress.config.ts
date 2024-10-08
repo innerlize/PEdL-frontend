@@ -23,8 +23,6 @@ export default defineConfig({
 		specPattern: 'cypress/tests/**/*.spec.{js,jsx,ts,tsx}'
 	},
 	env: {
-		FIREBASE_API_KEY: process.env.REACT_APP_FIREBASE_API_KEY,
-		FIREBASE_AUTH_DOMAIN: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
 		FIREBASE_EMULATOR_HUB_HOST:
 			process.env.REACT_APP_FIREBASE_EMULATOR_HUB_HOST,
 		FIREBASE_AUTH_EMULATOR_URL: process.env.REACT_APP_FIREBASE_AUTH_EMULATOR_URL
