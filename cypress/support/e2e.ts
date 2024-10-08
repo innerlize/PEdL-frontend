@@ -25,7 +25,7 @@ const fbConfig: FirebaseOptions = {
 const app = initializeApp(fbConfig);
 const auth = getAuth(app);
 
-const startEmulator = async () => {
+const connectToEmulator = async () => {
 	const emulatorHubRunning = await checkEmulatorHub();
 
 	if (!emulatorHubRunning) {
@@ -38,6 +38,6 @@ const startEmulator = async () => {
 	connectAuthEmulator(auth, authEmulatorUrl);
 };
 
-startEmulator();
+connectToEmulator();
 
 export { auth };
