@@ -7,14 +7,27 @@ import {
 	User as FirebaseUser
 } from 'firebase/auth';
 
-const firebaseAppConfig: FirebaseOptions = {
-	apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-	authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-	appId: process.env.REACT_APP_FIREBASE_APP_ID
+const getFirebaseConfig = (): FirebaseOptions => {
+	if (
+		process.env.NODE_ENV === 'development' ||
+		process.env.NODE_ENV === 'test'
+	) {
+		return {
+			apiKey: 'demo-key',
+			projectId: 'demo-project'
+		};
+	} else {
+		return {
+			apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+			authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+			appId: process.env.REACT_APP_FIREBASE_APP_ID
+		};
+	}
 };
 
-const firebaseApp =
-	getApps().length > 0 ? getApp() : initializeApp(firebaseAppConfig);
+const config = getFirebaseConfig();
+
+const firebaseApp = getApps().length > 0 ? getApp() : initializeApp(config);
 const auth = getAuth(firebaseApp);
 const provider = new GoogleAuthProvider();
 
