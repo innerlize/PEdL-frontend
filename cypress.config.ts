@@ -22,5 +22,10 @@ export default defineConfig({
 		baseUrl: process.env.CYPRESS_BASE_URL_PREFIX,
 		specPattern: 'cypress/tests/**/*.spec.{js,jsx,ts,tsx}'
 	},
+	env: {
+		FIREBASE_EMULATOR_HUB_HOST:
+			process.env.REACT_APP_FIREBASE_EMULATOR_HUB_HOST,
+		FIREBASE_AUTH_EMULATOR_URL: process.env.REACT_APP_FIREBASE_AUTH_EMULATOR_URL
+	},
 	chromeWebSecurity: false
 });

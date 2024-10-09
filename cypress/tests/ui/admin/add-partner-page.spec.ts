@@ -1,5 +1,12 @@
-describe('Admin Add Partner Page', () => {
+describe('Admin - Add Partner Page', () => {
 	beforeEach(() => {
+		cy.intercept('POST', 'api/admin/auth/verify-admin-access', {
+			statusCode: 200,
+			body: true
+		}).as('VERIFY_ADMIN_ACCESS');
+
+		cy.signInWithGoogle();
+
 		cy.visit('/admin-panel/partners/add');
 	});
 

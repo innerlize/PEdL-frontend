@@ -11,8 +11,20 @@ import AdminPortfolioPage from '../pages/Admin/Portfolio';
 import AdminPartnersPage from '../pages/Admin/Partners';
 import AdminAddProjectPage from '../pages/Admin/AddProject';
 import AdminAddPartnerPage from '../pages/Admin/AddPartner';
+import AdminAuthPage from '../pages/Admin/Auth';
+import ProtectedRoutes from '../components/Admin/ProtectedRoutes';
+import NotFoundPage from '../pages/NotFound';
+import { AuthProvider } from '../contexts/AuthContext';
 
 export const router = createBrowserRouter([
+	{
+		path: '/',
+		element: <HomePage />
+	},
+	{
+		path: '/portfolio/project/:id',
+		element: <ProjectPage />
+	},
 	{
 		element: <Layout />,
 		children: [
@@ -31,36 +43,46 @@ export const router = createBrowserRouter([
 		]
 	},
 	{
-		path: '/',
-		element: <HomePage />
-	},
-	{
-		path: '/portfolio/project/:id',
-		element: <ProjectPage />
-	},
-	{
-		path: '/admin-panel/',
-		element: <AdminHomePage />
-	},
-	{
-		element: <AdminLayout />,
+		element: <AuthProvider />,
 		children: [
 			{
-				path: '/admin-panel/portfolio',
-				element: <AdminPortfolioPage />
+				element: <ProtectedRoutes />,
+				children: [
+					{
+						path: '/admin-panel',
+						element: <AdminHomePage />
+					},
+					{
+						element: <AdminLayout />,
+						children: [
+							{
+								path: '/admin-panel/portfolio',
+								element: <AdminPortfolioPage />
+							},
+							{
+								path: '/admin-panel/partners',
+								element: <AdminPartnersPage />
+							},
+							{
+								path: '/admin-panel/project/add',
+								element: <AdminAddProjectPage />
+							},
+							{
+								path: '/admin-panel/partners/add',
+								element: <AdminAddPartnerPage />
+							}
+						]
+					}
+				]
 			},
 			{
-				path: '/admin-panel/partners',
-				element: <AdminPartnersPage />
-			},
-			{
-				path: '/admin-panel/project/add',
-				element: <AdminAddProjectPage />
-			},
-			{
-				path: '/admin-panel/partners/add',
-				element: <AdminAddPartnerPage />
+				path: '/admin-panel/auth',
+				element: <AdminAuthPage />
 			}
 		]
+	},
+	{
+		path: '*',
+		element: <NotFoundPage />
 	}
 ]);
