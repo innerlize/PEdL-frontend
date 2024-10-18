@@ -14,6 +14,7 @@ const getFirebaseConfig = (): FirebaseOptions => {
 	) {
 		return {
 			apiKey: 'demo-key',
+			authDomain: 'demo-auth-domain',
 			projectId: 'demo-project'
 		};
 	} else {
