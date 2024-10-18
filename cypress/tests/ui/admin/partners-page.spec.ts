@@ -8,6 +8,8 @@ describe('Admin - PartnersPage', () => {
 		cy.signInWithGoogle();
 
 		cy.visit('/admin-panel/partners');
+
+		cy.wait('@VERIFY_ADMIN_ACCESS');
 	});
 
 	it('should display all partners in the carousel', () => {

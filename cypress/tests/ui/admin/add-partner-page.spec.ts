@@ -8,6 +8,8 @@ describe('Admin - Add Partner Page', () => {
 		cy.signInWithGoogle();
 
 		cy.visit('/admin-panel/partners/add');
+
+		cy.wait('@VERIFY_ADMIN_ACCESS');
 	});
 
 	it('should render the page with header and form', () => {

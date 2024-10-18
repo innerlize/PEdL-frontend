@@ -8,6 +8,8 @@ describe('Admin - Add Project Page', () => {
 		cy.signInWithGoogle();
 
 		cy.visit('/admin-panel/project/add');
+
+		cy.wait('@VERIFY_ADMIN_ACCESS');
 	});
 
 	it('should render the page with header and form', () => {

@@ -8,6 +8,8 @@ describe('Admin - PortfolioPage', () => {
 		cy.signInWithGoogle();
 
 		cy.visit('/admin-panel/portfolio');
+
+		cy.wait('@VERIFY_ADMIN_ACCESS');
 	});
 
 	it('should display all projects in the carousel', () => {
