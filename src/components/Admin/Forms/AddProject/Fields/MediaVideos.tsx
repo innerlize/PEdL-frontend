@@ -70,7 +70,9 @@ export const AdminMediaVideosField: React.FC = () => {
 					/>
 
 					{arrayHelpers.form.values.mediaVideos.length > 0 && (
-						<div className='flex flex-wrap gap-2.5'>
+						<div
+							data-test='media-videos-boxes-container'
+							className='flex flex-wrap gap-2.5'>
 							{arrayHelpers.form.values.mediaVideos.map(
 								(video: string, index: number) => (
 									<AdminVideoPreviewBox

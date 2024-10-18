@@ -73,7 +73,9 @@ export const AdminMediaImagesField: React.FC = () => {
 					/>
 
 					{arrayHelpers.form.values.mediaImages.length > 0 && (
-						<div className='flex flex-wrap gap-2.5'>
+						<div
+							data-test='media-images-boxes-container'
+							className='flex flex-wrap gap-2.5'>
 							<PhotoProvider brokenElement={<AdminImageBrokenElement />}>
 								{arrayHelpers.form.values.mediaImages.map(
 									(image: string, index: number) => (
