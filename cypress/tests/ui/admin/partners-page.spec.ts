@@ -1,3 +1,5 @@
+import { partners } from '../../../fixtures/partners';
+
 describe('Admin - PartnersPage', () => {
 	beforeEach(() => {
 		cy.intercept('POST', 'api/admin/auth/verify-admin-access', {
@@ -5,11 +7,18 @@ describe('Admin - PartnersPage', () => {
 			body: true
 		}).as('VERIFY_ADMIN_ACCESS');
 
+		cy.intercept('GET', '/api/partners', {
+			statusCode: 200,
+			body: partners
+		}).as('GET_PARTNERS');
+
 		cy.signInWithGoogle();
 
 		cy.visit('/admin-panel/partners');
 
 		cy.wait('@VERIFY_ADMIN_ACCESS');
+
+		cy.wait('@GET_PARTNERS');
 	});
 
 	it('should display all partners in the carousel', () => {

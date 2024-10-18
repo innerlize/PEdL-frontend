@@ -1,3 +1,5 @@
+import { projects } from '../../../fixtures/projects';
+
 describe('Admin - PortfolioPage', () => {
 	beforeEach(() => {
 		cy.intercept('POST', 'api/admin/auth/verify-admin-access', {
@@ -5,11 +7,18 @@ describe('Admin - PortfolioPage', () => {
 			body: true
 		}).as('VERIFY_ADMIN_ACCESS');
 
+		cy.intercept('GET', '/api/projects', {
+			statusCode: 200,
+			body: projects
+		}).as('GET_PROJECTS');
+
 		cy.signInWithGoogle();
 
 		cy.visit('/admin-panel/portfolio');
 
 		cy.wait('@VERIFY_ADMIN_ACCESS');
+
+		cy.wait('@GET_PROJECTS');
 	});
 
 	it('should display all projects in the carousel', () => {
