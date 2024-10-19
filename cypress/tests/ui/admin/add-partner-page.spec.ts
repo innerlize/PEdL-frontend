@@ -77,4 +77,75 @@ describe('Admin - Add Partner Page', () => {
 			.contains('Image URL is not valid. Logo addition skipped.')
 			.should('be.visible');
 	});
+
+	describe('Link fields', () => {
+		const linkLabel = 'Example Link';
+		const linkURL = 'https://example.com';
+
+		it('should allow adding a link and display its tooltip', () => {
+			cy.get('[data-test="admin-links-field"] input')
+				.first()
+				.type(`${linkLabel}`);
+
+			cy.get('[data-test="admin-links-field"] input')
+				.last()
+				.type(`${linkURL}{enter}`);
+
+			cy.get('[data-test="admin-pill"]')
+				.should('be.visible')
+				.and('contain', linkLabel);
+
+			cy.get('[data-test="admin-pill"]').trigger('mouseover');
+
+			cy.get(`.react-tooltip`).should('be.visible').and('contain', linkURL);
+		});
+
+		it('should show an error when a link does not have a label or URL', () => {
+			cy.get('[data-test="admin-links-field"] input')
+				.first()
+				.type(`${linkLabel}`);
+
+			cy.get('[data-test="admin-links-field"] input').last().type('{enter}');
+
+			cy.get('.text-red-500')
+				.contains('Both fields are required to add a link, label and URL.')
+				.should('be.visible');
+		});
+
+		it('should throw an error when trying to add an existing link', () => {
+			cy.get('[data-test="admin-links-field"] input')
+				.first()
+				.type(`${linkLabel}`);
+
+			cy.get('[data-test="admin-links-field"] input')
+				.last()
+				.type(`${linkURL}{enter}`);
+
+			cy.get('[data-test="admin-links-field"] input')
+				.first()
+				.type(`${linkLabel}`);
+
+			cy.get('[data-test="admin-links-field"] input')
+				.last()
+				.type(`${linkURL}{enter}`);
+
+			cy.get('.text-red-500')
+				.contains(`Link "${linkLabel}" already exists.`)
+				.should('be.visible');
+		});
+
+		it('should remove a link pill on click', () => {
+			cy.get('[data-test="admin-links-field"] input')
+				.first()
+				.type(`${linkLabel}`);
+
+			cy.get('[data-test="admin-links-field"] input')
+				.last()
+				.type(`${linkURL}{enter}`);
+
+			cy.get('[data-test="admin-pill"]').contains(linkLabel).click();
+
+			cy.get('[data-test="admin-pill"]').should('not.exist');
+		});
+	});
 });
