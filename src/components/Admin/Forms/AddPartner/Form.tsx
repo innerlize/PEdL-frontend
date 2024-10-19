@@ -5,10 +5,14 @@ import { AdminPartnerNameField } from './Fields/PartnerName';
 import { AdminPartnerLogoField } from './Fields/PartnerLogo';
 import { AdminAddPartnerFormData } from '../../../../types/AddPartner';
 import { Spinner } from '../../../Spinner';
+import { AdminLinksField } from './Fields/Links';
 
 const validationSchema = Yup.object({
 	partnerName: Yup.string().required('Partner name is required'),
-	partnerLogo: Yup.string().required('Partner logo is required')
+	partnerLogo: Yup.string().required('Partner logo is required'),
+	links: Yup.array().of(
+		Yup.object({ label: Yup.string(), src: Yup.string() }).optional()
+	)
 });
 
 export const AdminAddPartnerForm = () => {
@@ -47,6 +51,8 @@ export const AdminAddPartnerForm = () => {
 						<AdminPartnerNameField />
 
 						<AdminPartnerLogoField />
+
+						<AdminLinksField />
 
 						<button
 							type='submit'
