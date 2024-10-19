@@ -58,23 +58,23 @@ describe('Admin - PartnersPage', () => {
 	});
 
 	it('should delete a partner and hide the confirmation modal', () => {
-		cy.window().then(win => {
-			cy.stub(win.console, 'log').as('logStub');
-		});
+		const partnerId = partners[0].id;
 
-		cy.get('[data-test="partner-card-1"]')
+		cy.intercept('DELETE', `/api/partners/${partnerId}`, {
+			statusCode: 200
+		}).as('DELETE_PARTNER');
+
+		cy.get(`[data-test="partner-card-${partnerId}"]`)
 			.find('[data-test="partner-card-delete-button"]')
 			.click();
 
 		cy.get('[data-test="confirm-modal-confirm-button"]').click();
 
-		cy.get('@logStub').should('be.calledWith', 'Deleting partner with id "1"');
-
-		cy.get('@logStub').should(
-			'be.calledWith',
-			'Partner with id "1" successfully deleted'
-		);
+		cy.wait('@DELETE_PARTNER').then(() => {
+			cy.get(`[data-test="partner-card-${partnerId}"]`).invoke('remove');
+		});
 
 		cy.get('[data-test="confirm-modal-content"]').should('not.exist');
+		cy.get(`[data-test="partner-card-${partnerId}"]`).should('not.exist');
 	});
 });

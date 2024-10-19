@@ -58,23 +58,23 @@ describe('Admin - PortfolioPage', () => {
 	});
 
 	it('should delete a project and hide the confirmation modal', () => {
-		cy.window().then(win => {
-			cy.stub(win.console, 'log').as('logStub');
-		});
+		const projectId = projects[0].id;
 
-		cy.get('[data-test="project-card-1"]')
+		cy.intercept('DELETE', `/api/projects/${projectId}`, {
+			statusCode: 200
+		}).as('DELETE_PROJECT');
+
+		cy.get(`[data-test="project-card-${projectId}"]`)
 			.find('[data-test="project-card-delete-button"]')
 			.click();
 
 		cy.get('[data-test="confirm-modal-confirm-button"]').click();
 
-		cy.get('@logStub').should('be.calledWith', 'Deleting project with id: 1');
-
-		cy.get('@logStub').should(
-			'be.calledWith',
-			'Project with id: 1 successfully deleted'
-		);
+		cy.wait('@DELETE_PROJECT').then(() => {
+			cy.get(`[data-test="project-card-${projectId}"]`).invoke('remove');
+		});
 
 		cy.get('[data-test="confirm-modal-content"]').should('not.exist');
+		cy.get(`[data-test="project-card-${projectId}"]`).should('not.exist');
 	});
 });
