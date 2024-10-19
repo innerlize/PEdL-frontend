@@ -11,6 +11,7 @@ import { AdminMediaVideosField } from './Fields/MediaVideos';
 import AdminLinksField from './Fields/Links';
 import { Spinner } from '../../../Spinner';
 import { toast, ToastContainer } from 'react-toastify';
+import { AdminDatesField } from './Fields/Dates';
 
 const validationSchema = Yup.object({
 	projectName: Yup.string().required('Project name is required'),
@@ -24,7 +25,11 @@ const validationSchema = Yup.object({
 	mediaVideos: Yup.array().of(Yup.string().optional()),
 	links: Yup.array().of(
 		Yup.object({ label: Yup.string(), src: Yup.string() }).optional()
-	)
+	),
+	start_date: Yup.date().required('Start date is required'),
+	end_date: Yup.date()
+		.required('End date is required')
+		.min(Yup.ref('start_date'), 'End date must be after start date')
 });
 
 export const AdminAddProjectForm = () => {
@@ -90,6 +95,8 @@ export const AdminAddProjectForm = () => {
 						<AdminMediaImagesField />
 
 						<AdminMediaVideosField />
+
+						<AdminDatesField />
 
 						<AdminLinksField />
 
