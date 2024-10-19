@@ -105,7 +105,9 @@ const AdminSoftwaresField = () => {
 					/>
 
 					{softwarePills.length > 0 && (
-						<div className='flex flex-wrap gap-2.5'>
+						<div
+							data-test='softwares-pills-container'
+							className='flex flex-wrap gap-2.5'>
 							{softwarePills.map((pill, index) => (
 								<AdminPill
 									key={index}

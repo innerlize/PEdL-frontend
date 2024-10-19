@@ -140,7 +140,9 @@ const AdminLinksField = () => {
 						</div>
 
 						{linkPills.length > 0 && (
-							<div className='flex flex-wrap gap-2.5'>
+							<div
+								data-test='links-pills-container'
+								className='flex flex-wrap gap-2.5'>
 								{linkPills.map((link, index) => (
 									<AdminPill
 										key={index}
