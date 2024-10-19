@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
 	ArrayHelpers,
 	ErrorMessage,
 	FieldArray,
+	useField,
 	useFormikContext
 } from 'formik';
 import { AdminPill } from '../../Pill';
@@ -10,6 +11,7 @@ import { getRandomHexColor } from '../../../../../utils/getRandomHexColor';
 import { AdminSimpleInputType } from '../../Inputs/SimpleInput';
 import { AdminInputFieldHeader } from '../../InputFieldHeader';
 import { AdminFieldWrapper } from '../../FieldWrapper';
+import { ProjectFormValues } from '../../../../../types/AddProject';
 
 interface Link {
 	label: string;
@@ -18,7 +20,9 @@ interface Link {
 }
 
 const AdminLinksField = () => {
-	const { setFieldError } = useFormikContext();
+	const { initialValues, setFieldError } =
+		useFormikContext<ProjectFormValues>();
+	const [field] = useField('links');
 
 	const [linkLabel, setLinkLabel] = useState('');
 	const [linkSrc, setLinkSrc] = useState('');
@@ -65,6 +69,20 @@ const AdminLinksField = () => {
 		setLinkPills(updatedLinks);
 		arrayHelpers.remove(index);
 	};
+
+	useEffect(() => {
+		if (initialValues.links && initialValues.links.length > 0) {
+			const initialLinks = field.value.map(
+				(link: { label: string; src: string }) => ({
+					label: link.label,
+					src: link.src,
+					backgroundColor: getRandomHexColor()
+				})
+			);
+
+			setLinkPills(initialLinks);
+		}
+	}, [initialValues]);
 
 	const helper = (
 		<>
