@@ -60,7 +60,7 @@ export const AdminPartnerCard: React.FC<AdminPartnerCardProps> = ({
 				<FaTrashAlt />
 			</div>
 
-			<Link to={`/admin-panel`}>
+			<Link to={`/admin-panel/partners/add`} state={id}>
 				<img
 					src={thumbnail}
 					alt={isLoaded ? `${name}'s partner thumbnail` : ''}

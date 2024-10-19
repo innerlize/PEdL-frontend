@@ -60,7 +60,7 @@ export const AdminProjectCard: React.FC<AdminProjectCardProps> = ({
 				<FaTrashAlt />
 			</div>
 
-			<Link to={`/admin-panel`}>
+			<Link to={`/admin-panel/project/add`} state={id}>
 				<img
 					src={thumbnail}
 					alt={isLoaded ? `${name}'s project thumbnail` : ''}
