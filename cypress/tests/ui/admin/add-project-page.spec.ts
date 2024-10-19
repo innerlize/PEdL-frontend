@@ -1,9 +1,21 @@
+import {
+	projectCreatedResponse,
+	projects,
+	projectUpdatedResponse
+} from '../../../fixtures/projects';
+import { convertTimestampToDate } from '../../../support/utils';
+
 describe('Admin - Add Project Page', () => {
 	beforeEach(() => {
 		cy.intercept('POST', 'api/admin/auth/verify-admin-access', {
 			statusCode: 200,
 			body: true
 		}).as('VERIFY_ADMIN_ACCESS');
+
+		cy.intercept('POST', '/api/projects', {
+			statusCode: 200,
+			body: projectCreatedResponse
+		}).as('CREATE_PROJECT');
 
 		cy.signInWithGoogle();
 
@@ -36,6 +48,12 @@ describe('Admin - Add Project Page', () => {
 		cy.get('.text-red-500')
 			.contains('Thumbnail is required')
 			.should('be.visible');
+		cy.get('.text-red-500')
+			.contains('Start date is required')
+			.should('be.visible');
+		cy.get('.text-red-500')
+			.contains('End date is required')
+			.should('be.visible');
 	});
 
 	it('should successfully submit the form with valid data', () => {
@@ -43,9 +61,7 @@ describe('Admin - Add Project Page', () => {
 			'https://images.pexels.com/photos/374857/pexels-photo-374857.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
 
 		cy.get('input[name="projectName"]').type('Example Project');
-
 		cy.get('input[name="customerName"]').type('Example Customer');
-
 		cy.get('textarea[name="description"]').type('This is an example project.');
 
 		cy.get('input[placeholder="Figma"]').type('React{enter}');
@@ -62,7 +78,25 @@ describe('Admin - Add Project Page', () => {
 			.and('have.attr', 'src')
 			.and('eq', thumbnailURL);
 
+		cy.get('[data-test="admin-dates-field"] input')
+			.should('be.visible')
+			.first()
+			.click()
+			.then(() => {
+				cy.get('.react-datepicker .react-datepicker__day--007').click();
+			});
+
+		cy.get('[data-test="admin-dates-field"] input')
+			.should('be.visible')
+			.last()
+			.click()
+			.then(() => {
+				cy.get('.react-datepicker .react-datepicker__day--015').click();
+			});
+
 		cy.get('form').submit();
+
+		cy.wait('@CREATE_PROJECT');
 
 		cy.get('.Toastify__toast')
 			.contains('Project successfully created!')
@@ -93,134 +127,333 @@ describe('Admin - Add Project Page', () => {
 		cy.get('[data-test="admin-pill"]').should('not.exist');
 	});
 
-	it('should allow adding a valid image URL and display its preview', () => {
-		const imageURL =
-			'https://images.pexels.com/photos/374857/pexels-photo-374857.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
+	describe('Image fields', () => {
+		it('should allow adding a valid image URL and display its preview', () => {
+			const imageURL =
+				'https://images.pexels.com/photos/374857/pexels-photo-374857.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
 
-		cy.get('[data-test="admin-media-images-field"] input').type(
-			`${imageURL}{enter}`
-		);
-
-		cy.get('[data-test="admin-image-preview-box"] img')
-			.should('be.visible')
-			.and('have.attr', 'src')
-			.and('eq', imageURL);
-	});
-
-	it('should show an error for an invalid image URL', () => {
-		const invalidImageURL = 'https://www.invalid-image-url.com/123';
-
-		cy.get('[data-test="admin-media-images-field"] input').type(
-			`${invalidImageURL}{enter}`
-		);
-
-		cy.get('.text-red-500')
-			.contains('Invalid image URL. Image not added to the list.')
-			.should('be.visible');
-	});
-
-	it('should allow adding a valid video URL and display its preview', () => {
-		const videoURL = 'https://www.youtube.com/watch?v=a5uQMwRMHcs';
-
-		cy.get('[data-test="admin-media-videos-field"] input').type(
-			`${videoURL}{enter}`
-		);
-
-		cy.get('.react-player__preview')
-			.should('be.visible')
-			.invoke('attr', 'style')
-			.should(
-				'include',
-				'background-image: url("https://i.ytimg.com/vi/a5uQMwRMHcs/hqdefault.jpg")'
+			cy.get('[data-test="admin-media-images-field"] input').type(
+				`${imageURL}{enter}`
 			);
+
+			cy.get('[data-test="admin-image-preview-box"] img')
+				.should('be.visible')
+				.and('have.attr', 'src')
+				.and('eq', imageURL);
+		});
+
+		it('should show an error for an invalid image URL', () => {
+			const invalidImageURL = 'https://www.invalid-image-url.com/123';
+
+			cy.get('[data-test="admin-media-images-field"] input').type(
+				`${invalidImageURL}{enter}`
+			);
+
+			cy.get('.text-red-500')
+				.contains('Invalid image URL. Image not added to the list.')
+				.should('be.visible');
+		});
 	});
 
-	it('should show an error for an invalid video URL', () => {
-		const invalidVideoURL = 'https://www.invalid-video-url.com/123';
+	describe('Video fields', () => {
+		it('should allow adding a valid video URL and display its preview', () => {
+			const videoURL = 'https://www.youtube.com/watch?v=a5uQMwRMHcs';
 
-		cy.get('[data-test="admin-media-videos-field"] input').type(
-			`${invalidVideoURL}{enter}`
+			cy.get('[data-test="admin-media-videos-field"] input').type(
+				`${videoURL}{enter}`
+			);
+
+			cy.get('.react-player__preview')
+				.should('be.visible')
+				.invoke('attr', 'style')
+				.should(
+					'include',
+					'background-image: url("https://i.ytimg.com/vi/a5uQMwRMHcs/hqdefault.jpg")'
+				);
+		});
+
+		it('should show an error for an invalid video URL', () => {
+			const invalidVideoURL = 'https://www.invalid-video-url.com/123';
+
+			cy.get('[data-test="admin-media-videos-field"] input').type(
+				`${invalidVideoURL}{enter}`
+			);
+
+			cy.get('.text-red-500')
+				.contains('This video cannot be played. Video not added to the list.')
+				.should('be.visible');
+		});
+	});
+
+	describe('Date fields', () => {
+		const padDay = (value: string, length: number = 3): string => {
+			return value.padStart(length, '0');
+		};
+
+		it('should successfully add a start date', () => {
+			const currentYear = new Date().getFullYear();
+			const currentMonth = new Date().getMonth() + 1;
+			const dayToSelect = '7';
+			const formattedStartDate = `${currentMonth}/${padDay(dayToSelect, 2)}/${currentYear}`;
+
+			cy.get('[data-test="admin-dates-field"] input')
+				.first()
+				.should('be.visible')
+				.click();
+
+			cy.get('.react-datepicker')
+				.should('be.visible')
+				.find(`.react-datepicker__day--${padDay(dayToSelect)}`)
+				.should('be.visible')
+				.click();
+
+			cy.get('.react-datepicker').should('not.exist');
+
+			cy.get('[data-test="admin-dates-field"] input')
+				.first()
+				.should('have.value', formattedStartDate);
+		});
+
+		it('should successfully add an end date', () => {
+			const currentYear = new Date().getFullYear();
+			const currentMonth = new Date().getMonth() + 1;
+			const dayToSelect = '19';
+			const formattedEndDate = `${currentMonth}/${padDay(dayToSelect, 2)}/${currentYear}`;
+
+			cy.get('[data-test="admin-dates-field"] input')
+				.last()
+				.should('be.visible')
+				.click();
+
+			cy.get('.react-datepicker')
+				.should('be.visible')
+				.find(`.react-datepicker__day--${padDay(dayToSelect)}`)
+				.should('be.visible')
+				.click();
+
+			cy.get('.react-datepicker').should('not.exist');
+
+			cy.get('[data-test="admin-dates-field"] input')
+				.last()
+				.should('have.value', formattedEndDate);
+		});
+	});
+
+	describe('Link fields', () => {
+		const linkLabel = 'Example Link';
+		const linkURL = 'https://example.com';
+
+		it('should allow adding a link and display its tooltip', () => {
+			cy.get('[data-test="admin-links-field"] input')
+				.first()
+				.type(`${linkLabel}`);
+
+			cy.get('[data-test="admin-links-field"] input')
+				.last()
+				.type(`${linkURL}{enter}`);
+
+			cy.get('[data-test="admin-pill"]')
+				.should('be.visible')
+				.and('contain', linkLabel);
+
+			cy.get('[data-test="admin-pill"]').trigger('mouseover');
+
+			cy.get(`.react-tooltip`).should('be.visible').and('contain', linkURL);
+		});
+
+		it('should show an error when a link does not have a label or URL', () => {
+			cy.get('[data-test="admin-links-field"] input')
+				.first()
+				.type(`${linkLabel}`);
+
+			cy.get('[data-test="admin-links-field"] input').last().type('{enter}');
+
+			cy.get('.text-red-500')
+				.contains('Both fields are required to add a link, label and URL.')
+				.should('be.visible');
+		});
+
+		it('should throw an error when trying to add an existing link', () => {
+			cy.get('[data-test="admin-links-field"] input')
+				.first()
+				.type(`${linkLabel}`);
+
+			cy.get('[data-test="admin-links-field"] input')
+				.last()
+				.type(`${linkURL}{enter}`);
+
+			cy.get('[data-test="admin-links-field"] input')
+				.first()
+				.type(`${linkLabel}`);
+
+			cy.get('[data-test="admin-links-field"] input')
+				.last()
+				.type(`${linkURL}{enter}`);
+
+			cy.get('.text-red-500')
+				.contains(`Link "${linkLabel}" already exists.`)
+				.should('be.visible');
+		});
+
+		it('should remove a link pill on click', () => {
+			cy.get('[data-test="admin-links-field"] input')
+				.first()
+				.type(`${linkLabel}`);
+
+			cy.get('[data-test="admin-links-field"] input')
+				.last()
+				.type(`${linkURL}{enter}`);
+
+			cy.get('[data-test="admin-pill"]').contains(linkLabel).click();
+
+			cy.get('[data-test="admin-pill"]').should('not.exist');
+		});
+	});
+});
+
+describe('Admin - Add Project Page - Update Project', () => {
+	beforeEach(() => {
+		cy.intercept('POST', 'api/admin/auth/verify-admin-access', {
+			statusCode: 200,
+			body: true
+		}).as('VERIFY_ADMIN_ACCESS');
+
+		cy.intercept('GET', '/api/projects', {
+			statusCode: 200,
+			body: projects
+		}).as('GET_PROJECTS');
+
+		cy.intercept('GET', '/api/projects/*', {
+			statusCode: 200,
+			body: projects[0]
+		}).as('GET_SINGLE_PROJECT');
+
+		cy.intercept('PATCH', '/api/projects/*', {
+			statusCode: 200,
+			body: projectUpdatedResponse
+		}).as('UPDATE_PROJECT');
+
+		cy.signInWithGoogle();
+
+		cy.visit('/admin-panel/portfolio');
+
+		cy.wait('@VERIFY_ADMIN_ACCESS');
+
+		cy.wait('@GET_PROJECTS');
+
+		cy.get('[data-test="project-card-1"]').should('be.visible').click();
+
+		cy.url().should(
+			'eq',
+			`${Cypress.config().baseUrl}/admin-panel/project/add`
 		);
 
-		cy.get('.text-red-500')
-			.contains('This video cannot be played. Video not added to the list.')
+		cy.wait('@GET_SINGLE_PROJECT');
+	});
+
+	it('should render the page with header and form', () => {
+		cy.get('h2').contains('Updating project').should('be.visible');
+
+		cy.get('form').should('exist');
+	});
+
+	it('should populate form fields with existing project data on load', () => {
+		const project = projects[0];
+
+		cy.get('input[name="projectName"]').should('have.value', project.name);
+
+		cy.get('input[name="customerName"]').should('have.value', project.customer);
+
+		cy.get('textarea[name="description"]').should(
+			'have.value',
+			project.description
+		);
+
+		cy.get('[data-test="admin-thumbnail-field"] input').should(
+			'have.value',
+			project.thumbnail
+		);
+
+		cy.get('input[name="start_date"]')
+			.first()
+			.should('have.value', convertTimestampToDate(project.start_date));
+		cy.get('input[name="end_date"]').should(
+			'have.value',
+			convertTimestampToDate(project.end_date)
+		);
+
+		cy.get('[data-test="softwares-pills-container"]')
+			.children()
+			.should('have.length', project.softwares.length)
+			.each(($software, index) => {
+				cy.wrap($software).contains(project.softwares[index]);
+			});
+
+		cy.get('[data-test="media-images-boxes-container"]')
+			.children()
+			.should('have.length', project.media.images.length)
+			.each(($image, index) => {
+				cy.wrap($image)
+					.find('img')
+					.should('have.attr', 'src', project.media.images[index]);
+			});
+		cy.get('[data-test="media-videos-boxes-container"]')
+			.children()
+			.should('have.length', project.media.images.length)
+			.each(($video, index) => {
+				cy.wrap($video)
+					.find('.react-player__preview')
+					.should('be.visible')
+					.click()
+					.then(() => {
+						cy.get('video')
+							.should('be.visible')
+							.and('have.attr', 'src', project.media.videos[index]);
+					});
+			});
+
+		cy.get('[data-test="links-pills-container"]')
+			.children()
+			.should('have.length', project.links.length)
+			.each(($link, index) => {
+				cy.wrap($link)
+					.contains(project.links[index].label)
+					.trigger('mouseover')
+					.then(() => {
+						cy.get('.react-tooltip')
+							.should('be.visible')
+							.and('contain', project.links[index].src);
+					});
+			});
+	});
+
+	it('should update project data when form is submitted', () => {
+		const newProjectName = 'Updated Project 1';
+
+		cy.intercept('GET', '/api/projects/*', {
+			statusCode: 200,
+			body: {
+				...projects[0],
+				name: newProjectName
+			}
+		}).as('GET_SINGLE_PROJECT_UPDATED');
+
+		cy.get('input[name="projectName"]').clear().type(newProjectName);
+
+		cy.get('form').submit();
+
+		cy.wait('@UPDATE_PROJECT')
+			.its('response.body.data.name')
+			.should('eq', newProjectName);
+
+		cy.get('.Toastify__toast')
+			.contains('Project successfully updated!')
 			.should('be.visible');
-	});
 
-	it('should allow adding a link and display its tooltip', () => {
-		const linkLabel = 'Example Link';
-		const linkURL = 'https://example.com';
+		cy.reload();
 
-		cy.get('[data-test="admin-links-field"] input')
-			.first()
-			.type(`${linkLabel}`);
+		cy.wait('@GET_SINGLE_PROJECT_UPDATED');
 
-		cy.get('[data-test="admin-links-field"] input')
-			.last()
-			.type(`${linkURL}{enter}`);
-
-		cy.get('[data-test="admin-pill"]')
-			.should('be.visible')
-			.and('contain', linkLabel);
-
-		cy.get('[data-test="admin-pill"]').trigger('mouseover');
-
-		cy.get(`.react-tooltip`).should('be.visible').and('contain', linkURL);
-	});
-
-	it('should show an error when a link does not have a label or URL', () => {
-		const linkLabel = 'Example Link';
-
-		cy.get('[data-test="admin-links-field"] input')
-			.first()
-			.type(`${linkLabel}`);
-
-		cy.get('[data-test="admin-links-field"] input').last().type('{enter}');
-
-		cy.get('.text-red-500')
-			.contains('Both fields are required to add a link, label and URL.')
-			.should('be.visible');
-	});
-
-	it('should throw an error when trying to add an existing link', () => {
-		const linkLabel = 'Example Link';
-		const linkURL = 'https://example.com';
-
-		cy.get('[data-test="admin-links-field"] input')
-			.first()
-			.type(`${linkLabel}`);
-
-		cy.get('[data-test="admin-links-field"] input')
-			.last()
-			.type(`${linkURL}{enter}`);
-
-		cy.get('[data-test="admin-links-field"] input')
-			.first()
-			.type(`${linkLabel}`);
-
-		cy.get('[data-test="admin-links-field"] input')
-			.last()
-			.type(`${linkURL}{enter}`);
-
-		cy.get('.text-red-500')
-			.contains(`Link "${linkLabel}" already exists.`)
-			.should('be.visible');
-	});
-
-	it('should remove a link pill on click', () => {
-		const linkLabel = 'Example Link';
-		const linkURL = 'https://example.com';
-
-		cy.get('[data-test="admin-links-field"] input')
-			.first()
-			.type(`${linkLabel}`);
-
-		cy.get('[data-test="admin-links-field"] input')
-			.last()
-			.type(`${linkURL}{enter}`);
-
-		cy.get('[data-test="admin-pill"]').contains(linkLabel).click();
-
-		cy.get('[data-test="admin-pill"]').should('not.exist');
+		cy.get('input[name="projectName"]').should('have.value', newProjectName);
 	});
 });
