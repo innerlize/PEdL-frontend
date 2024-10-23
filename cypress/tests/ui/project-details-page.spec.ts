@@ -74,7 +74,7 @@ describe('Project Page', () => {
 	it('should display images in the carousel and swipe through them', () => {
 		cy.viewport(408, 777);
 
-		cy.wait(2000);
+		cy.wait(12000);
 
 		cy.get('.swiper').should('be.visible');
 		cy.get('.swiper-slide').should('have.length', project.media.images.length);

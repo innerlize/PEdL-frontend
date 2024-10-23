@@ -11,7 +11,7 @@ import { getRandomHexColor } from '../../../../../utils/getRandomHexColor';
 import { AdminSimpleInputType } from '../../Inputs/SimpleInput';
 import { AdminInputFieldHeader } from '../../InputFieldHeader';
 import { AdminFieldWrapper } from '../../FieldWrapper';
-import { ProjectFormValues } from '../../../../../types/AddProject';
+import { PartnerFormValues } from '../../../../../types/AddPartner';
 
 interface Link {
 	label: string;
@@ -19,9 +19,9 @@ interface Link {
 	backgroundColor: string;
 }
 
-const AdminLinksField = () => {
+export const AdminLinksField = () => {
 	const { initialValues, setFieldError } =
-		useFormikContext<ProjectFormValues>();
+		useFormikContext<PartnerFormValues>();
 	const [field] = useField('links');
 
 	const [linkLabel, setLinkLabel] = useState('');
@@ -88,12 +88,12 @@ const AdminLinksField = () => {
 		<>
 			<p>
 				Once you filled the fields, you will be able to add a link by pressing
-				the <span className='text-primary'>Enter</span> key.
+				the <span className='text-secondary'>Enter</span> key.
 			</p>
 
 			<p>
 				To view the URL assigned to a link, just{' '}
-				<span className='text-primary'>hover</span> over it.
+				<span className='text-secondary'>hover</span> over it.
 			</p>
 
 			<p>
@@ -121,7 +121,7 @@ const AdminLinksField = () => {
 								value={linkLabel}
 								onChange={e => setLinkLabel(e.target.value)}
 								onKeyDown={e => addLink(e, arrayHelpers)}
-								placeholder='Twitter'
+								placeholder='Microsoft'
 							/>
 						</div>
 
@@ -135,7 +135,7 @@ const AdminLinksField = () => {
 								value={linkSrc}
 								onChange={e => setLinkSrc(e.target.value)}
 								onKeyDown={e => addLink(e, arrayHelpers)}
-								placeholder='https://x.com/NASA'
+								placeholder='https://www.microsoft.com/'
 							/>
 						</div>
 
@@ -157,7 +157,7 @@ const AdminLinksField = () => {
 					</div>
 
 					<ErrorMessage
-						name='links'
+						name={field.name}
 						render={error => <div className='text-red-500'>{error}</div>}
 					/>
 				</AdminFieldWrapper>
@@ -165,5 +165,3 @@ const AdminLinksField = () => {
 		/>
 	);
 };
-
-export default AdminLinksField;

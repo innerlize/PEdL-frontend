@@ -1,19 +1,25 @@
-import { KeyboardEvent, useState } from 'react';
+import { KeyboardEvent, useEffect, useState } from 'react';
 import {
 	ArrayHelpers,
 	ErrorMessage,
 	FieldArray,
+	useField,
 	useFormikContext
 } from 'formik';
 import { getRandomHexColor } from '../../../../../utils/getRandomHexColor';
-import { SoftwarePill } from '../../../../../types/AddProject';
+import {
+	ProjectFormValues,
+	SoftwarePill
+} from '../../../../../types/AddProject';
 import { AdminPill } from '../../Pill';
 import { AdminInputFieldHeader } from '../../InputFieldHeader';
 import { AdminSimpleInputType } from '../../Inputs/SimpleInput';
 import { AdminFieldWrapper } from '../../FieldWrapper';
 
 const AdminSoftwaresField = () => {
-	const { setFieldError } = useFormikContext();
+	const { initialValues, setFieldError } =
+		useFormikContext<ProjectFormValues>();
+	const [field] = useField('softwares');
 
 	const [inputValue, setInputValue] = useState('');
 	const [softwarePills, setSoftwarePills] = useState<SoftwarePill[]>([]);
@@ -57,6 +63,17 @@ const AdminSoftwaresField = () => {
 		arrayHelpers.remove(index);
 	};
 
+	useEffect(() => {
+		if (initialValues.softwares && initialValues.softwares.length > 0) {
+			const initialSoftwares = field.value.map((software: string) => ({
+				name: software,
+				color: getRandomHexColor()
+			}));
+
+			setSoftwarePills(initialSoftwares);
+		}
+	}, [initialValues]);
+
 	const helper = (
 		<>
 			<p>
@@ -88,7 +105,9 @@ const AdminSoftwaresField = () => {
 					/>
 
 					{softwarePills.length > 0 && (
-						<div className='flex flex-wrap gap-2.5'>
+						<div
+							data-test='softwares-pills-container'
+							className='flex flex-wrap gap-2.5'>
 							{softwarePills.map((pill, index) => (
 								<AdminPill
 									key={index}

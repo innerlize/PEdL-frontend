@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaTrashAlt } from 'react-icons/fa';
 import { useConfirmModal } from '../../../hooks/useConfirmModal';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deletePartner } from '../../../api/partners';
+import { useAuth } from '../../../hooks/useAuth';
 
 interface AdminPartnerCardProps {
 	id: string;
@@ -16,13 +19,25 @@ export const AdminPartnerCard: React.FC<AdminPartnerCardProps> = ({
 }) => {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const { showModal } = useConfirmModal();
+	const { getCurrentUserToken } = useAuth();
+	const queryClient = useQueryClient();
+
+	const mutation = useMutation({
+		mutationFn: async () => {
+			const token = await getCurrentUserToken();
+
+			return await deletePartner(id, token!);
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['partners'] });
+		},
+		onError: error => {
+			console.error(`Error deleting partner with id ${id}: `, error);
+		}
+	});
 
 	const handleDelete = async () => {
-		console.log(`Deleting partner with id "${id}"`);
-
-		await new Promise(resolve => setTimeout(resolve, 2000)).then(() => {
-			console.log(`Partner with id "${id}" successfully deleted`);
-		});
+		await mutation.mutateAsync();
 	};
 
 	const handleShowModal = () => {
@@ -45,7 +60,7 @@ export const AdminPartnerCard: React.FC<AdminPartnerCardProps> = ({
 				<FaTrashAlt />
 			</div>
 
-			<Link to={`/admin-panel`}>
+			<Link to={`/admin-panel/partners/add`} state={id}>
 				<img
 					src={thumbnail}
 					alt={isLoaded ? `${name}'s partner thumbnail` : ''}

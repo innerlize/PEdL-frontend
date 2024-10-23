@@ -2,6 +2,9 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaTrashAlt } from 'react-icons/fa';
 import { useConfirmModal } from '../../../hooks/useConfirmModal';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteProject } from '../../../api/projects';
+import { useAuth } from '../../../hooks/useAuth';
 
 interface AdminProjectCardProps {
 	id: string;
@@ -16,13 +19,25 @@ export const AdminProjectCard: React.FC<AdminProjectCardProps> = ({
 }) => {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const { showModal } = useConfirmModal();
+	const { getCurrentUserToken } = useAuth();
+	const queryClient = useQueryClient();
+
+	const mutation = useMutation({
+		mutationFn: async () => {
+			const token = await getCurrentUserToken();
+
+			return await deleteProject(id, token!);
+		},
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: ['projects'] });
+		},
+		onError: error => {
+			console.error(`Error deleting project with id ${id}: `, error);
+		}
+	});
 
 	const handleDelete = async () => {
-		console.log(`Deleting project with id: ${id}`);
-
-		await new Promise(resolve => setTimeout(resolve, 2000)).then(() => {
-			console.log(`Project with id: ${id} successfully deleted`);
-		});
+		await mutation.mutateAsync();
 	};
 
 	const handleShowModal = () => {
@@ -45,7 +60,7 @@ export const AdminProjectCard: React.FC<AdminProjectCardProps> = ({
 				<FaTrashAlt />
 			</div>
 
-			<Link to={`/admin-panel`}>
+			<Link to={`/admin-panel/project/add`} state={id}>
 				<img
 					src={thumbnail}
 					alt={isLoaded ? `${name}'s project thumbnail` : ''}
