@@ -47,3 +47,22 @@ export const deleteProject = async (
 
 	return response.data;
 };
+
+export const updateProjectOrder = async (
+	id: string,
+	newOrder: number,
+	app: string,
+	token: string
+): Promise<unknown> => {
+	const response = await apiClient.patch(
+		`/projects/${id}/order`,
+		{ newOrder, app },
+		{
+			headers: { Authorization: `Bearer ${token}` }
+		}
+	);
+
+	console.log('response', response.data);
+
+	return response.data;
+};
