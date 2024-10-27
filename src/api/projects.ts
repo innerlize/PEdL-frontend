@@ -62,7 +62,5 @@ export const updateProjectOrder = async (
 		}
 	);
 
-	console.log('response', response.data);
-
 	return response.data;
 };
