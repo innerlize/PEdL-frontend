@@ -1,4 +1,4 @@
-import { Project } from '../../../types/Portfolio';
+import { AppName, Project } from '../../../types/Portfolio';
 import { AdminProjectCard } from './ProjectCard';
 import {
 	DragDropContext,
@@ -14,7 +14,7 @@ import { toast } from 'react-toastify';
 
 interface AdminProjectsTableProps {
 	projects: Project[];
-	app: 'pedl' | 'cofcof';
+	app: AppName;
 }
 
 export const AdminProjectsTable: React.FC<AdminProjectsTableProps> = ({

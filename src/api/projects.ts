@@ -1,6 +1,6 @@
 import { apiClient } from '../config/axios';
 import { CreateProjectRequest } from '../types/AddProject';
-import { Project } from '../types/Portfolio';
+import { AppName, Project } from '../types/Portfolio';
 
 export const getProjects = async (): Promise<Project[]> => {
 	const response = await apiClient.get('/projects');
@@ -51,7 +51,7 @@ export const deleteProject = async (
 export const updateProjectOrder = async (
 	id: string,
 	newOrder: number,
-	app: string,
+	app: AppName,
 	token: string
 ): Promise<unknown> => {
 	const response = await apiClient.patch(

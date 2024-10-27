@@ -6,12 +6,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteProject } from '../../../api/projects';
 import { useAuth } from '../../../hooks/useAuth';
 import clsx from 'clsx';
+import { AppName } from '../../../types/Portfolio';
 
 interface AdminProjectCardProps {
 	id: string;
 	name: string;
 	thumbnail: string;
-	app?: 'pedl' | 'cofcof';
+	app?: AppName;
 }
 
 export const AdminProjectCard: React.FC<AdminProjectCardProps> = ({
