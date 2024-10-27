@@ -9,6 +9,7 @@ import {
 import { useCallback, useEffect, useState } from 'react';
 import { useAuth } from '../../../hooks/useAuth';
 import { updateProjectOrder } from '../../../api/projects';
+import { toast } from 'react-toastify';
 
 interface AdminProjectsTableProps {
 	projects: Project[];
@@ -32,8 +33,8 @@ export const AdminProjectsTable: React.FC<AdminProjectsTableProps> = ({
 			const reorderedProjects = [...localProjects];
 
 			const [movedProject] = reorderedProjects.splice(source.index, 1);
-			reorderedProjects.splice(destination.index, 0, movedProject);
 
+			reorderedProjects.splice(destination.index, 0, movedProject);
 			setLocalProjects(reorderedProjects);
 
 			const token = await getCurrentUserToken();
@@ -43,7 +44,20 @@ export const AdminProjectsTable: React.FC<AdminProjectsTableProps> = ({
 				destination.index + 1,
 				app,
 				token!
-			);
+			)
+				.then(() => {
+					toast.success(`Project order for "${app}" successfully updated!`, {
+						icon: () => '🎉',
+						autoClose: 2000
+					});
+				})
+				.catch(err => {
+					console.error('Error updating project order: ', err);
+					toast.error(
+						`Error updating project order for "${app}"! Check the console for more details.`,
+						{ autoClose: 2000 }
+					);
+				});
 		},
 		[localProjects, app, getCurrentUserToken]
 	);
