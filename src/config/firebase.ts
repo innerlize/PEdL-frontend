@@ -17,12 +17,16 @@ const getFirebaseConfig = (): FirebaseOptions => {
 			authDomain: 'demo-auth-domain',
 			projectId: 'demo-project'
 		};
-	} else {
+	} else if (process.env.NODE_ENV === 'production') {
 		return {
 			apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
 			authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
 			appId: process.env.REACT_APP_FIREBASE_APP_ID
 		};
+	} else {
+		throw new Error(
+			`'Firebase config is not defined for this environment: ${process.env.NODE_ENV}'`
+		);
 	}
 };
 
