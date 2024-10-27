@@ -11,6 +11,7 @@ export interface Project {
 	start_date: Timestamp;
 	end_date: Timestamp;
 	links?: Link[];
+	order: OrderByApp;
 }
 
 interface Media {
@@ -22,3 +23,7 @@ export interface Timestamp {
 	_seconds: number;
 	_nanoseconds: number;
 }
+
+export type AppName = 'pedl' | 'cofcof';
+
+interface OrderByApp extends Record<AppName, number> {}
