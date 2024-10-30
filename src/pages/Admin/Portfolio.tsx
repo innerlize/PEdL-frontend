@@ -1,8 +1,9 @@
 import { useQuery } from '@tanstack/react-query';
-import { AdminProjectsCarousel } from '../../components/Admin/Portfolio/ProjectsCarousel';
+import { AdminProjectsList } from '../../components/Admin/Portfolio/ProjectsList';
 import { AdminSectionHeader } from '../../components/Admin/SectionHeader';
 import { Spinner } from '../../components/Spinner';
 import { getProjects } from '../../api/projects';
+import { AppName, Project } from '../../types/Portfolio';
 
 const AdminPortfolioPage: React.FC = () => {
 	const {
@@ -25,9 +26,14 @@ const AdminPortfolioPage: React.FC = () => {
 			<br />
 			If you want to <span className='text-[#CC3333]'>delete</span> a project,{' '}
 			<span className='text-[#CC3333]'>click on the red button</span> at the
-			top-right corner of its box.
+			top-left corner of its box.
 		</>
 	);
+
+	const sortProjectsByApp = (projects: Project[], app: AppName) =>
+		[...projects].sort(
+			(a, b) => (a.order[app] ?? Infinity) - (b.order[app] ?? Infinity)
+		);
 
 	const renderContent = () => {
 		if (isLoading) {
@@ -43,7 +49,15 @@ const AdminPortfolioPage: React.FC = () => {
 		}
 
 		if (projects && projects.length > 0) {
-			return <AdminProjectsCarousel projects={projects} />;
+			const apps: AppName[] = ['pedl', 'cofcof'];
+
+			return apps.map(app => {
+				const sortedProjects = sortProjectsByApp(projects, app);
+
+				return (
+					<AdminProjectsList key={app} projects={sortedProjects} app={app} />
+				);
+			});
 		}
 
 		return (
@@ -57,7 +71,9 @@ const AdminPortfolioPage: React.FC = () => {
 		<div className='flex flex-col w-full'>
 			<AdminSectionHeader title={title} subtitle={subtitle} />
 
-			<div className='flex-1 mt-[60px] md:mt-[130px] xl:mt-[60px] 2xl:mt-[80px]'>
+			<div
+				data-test='projects-tables-container'
+				className='flex justify-evenly mt-[60px] md:mt-[130px] xl:mt-[60px] 2xl:mt-[80px]'>
 				{renderContent()}
 			</div>
 		</div>
