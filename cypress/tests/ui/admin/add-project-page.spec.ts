@@ -341,7 +341,9 @@ describe('Admin - Add Project Page - Update Project', () => {
 
 		cy.wait('@GET_PROJECTS');
 
-		cy.get('[data-test="project-card-1"]').should('be.visible').click();
+		cy.get('[data-test="pedl-projects-list"] [data-test="project-card-1"]')
+			.should('be.visible')
+			.click();
 
 		cy.url().should(
 			'eq',
