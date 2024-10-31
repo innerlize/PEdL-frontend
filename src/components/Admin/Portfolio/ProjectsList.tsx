@@ -40,6 +40,7 @@ export const AdminProjectsList: React.FC<AdminProjectsListProps> = ({
 										index={index}>
 										{provided => (
 											<li
+												data-test='projects-list-item'
 												className='mb-4'
 												ref={provided.innerRef}
 												{...provided.draggableProps}
