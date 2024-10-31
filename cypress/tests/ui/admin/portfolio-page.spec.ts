@@ -147,7 +147,7 @@ describe('Admin - PortfolioPage', () => {
 		cy.get('[data-test="confirm-modal-content"]').should('not.exist');
 	});
 
-	it.only('should delete a project, hide the confirmation modal and reorder remaining projects', () => {
+	it('should delete a project, hide the confirmation modal and reorder remaining projects', () => {
 		const expectedPedlProjectsAfterDelete = projects.filter(
 			project => project.id !== secondProjectId
 		);
