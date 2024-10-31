@@ -53,6 +53,8 @@ describe('Admin - AuthPage', () => {
 			cy.visit('/admin-panel/portfolio');
 
 			cy.get('button').contains('Logout').click();
+
+			cy.wait('@REVOKE_TOKEN');
 		});
 	});
 });
