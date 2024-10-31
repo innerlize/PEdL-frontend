@@ -10,7 +10,7 @@ describe('Admin - AuthPage', () => {
 		cy.get('button').contains('Time to show my credentials!');
 	});
 
-	describe('Admin - Panel Pages', () => {
+	describe('Admin - AuthPage with Mocked Google Login', () => {
 		beforeEach(() => {
 			cy.intercept('POST', 'api/admin/auth/verify-admin-access', {
 				statusCode: 200,
