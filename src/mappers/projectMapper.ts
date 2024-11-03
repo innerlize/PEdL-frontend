@@ -1,7 +1,10 @@
-import { ProjectFormValues, CreateProjectRequest } from '../types/AddProject';
+import {
+	CreateProjectRequest,
+	ProjectFormFieldsValues
+} from '../types/AddProject';
 
 export const mapProjectFormValuesToRequest = (
-	values: ProjectFormValues
+	values: ProjectFormFieldsValues
 ): CreateProjectRequest => {
 	const requestData: CreateProjectRequest = {
 		name: values.projectName,
@@ -10,8 +13,10 @@ export const mapProjectFormValuesToRequest = (
 		softwares: values.softwares,
 		thumbnail: values.thumbnail,
 		media: {
-			images: values.mediaImages,
-			videos: values.mediaVideos
+			imagesUrls: values.imagesUrls,
+			imagesFiles: values.imagesFiles,
+			videosUrls: values.videosUrls,
+			videosFiles: values.videosFiles
 		},
 		start_date: values.start_date!,
 		end_date: values.end_date!,
