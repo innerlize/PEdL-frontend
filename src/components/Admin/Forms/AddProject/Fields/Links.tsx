@@ -11,7 +11,7 @@ import { getRandomHexColor } from '../../../../../utils/getRandomHexColor';
 import { AdminSimpleInputType } from '../../Inputs/SimpleInput';
 import { AdminInputFieldHeader } from '../../InputFieldHeader';
 import { AdminFieldWrapper } from '../../FieldWrapper';
-import { ProjectFormValues } from '../../../../../types/AddProject';
+import { ProjectFormFieldsValues } from '../../../../../types/AddProject';
 
 interface Link {
 	label: string;
@@ -21,7 +21,7 @@ interface Link {
 
 const AdminLinksField = () => {
 	const { initialValues, setFieldError } =
-		useFormikContext<ProjectFormValues>();
+		useFormikContext<ProjectFormFieldsValues>();
 	const [field] = useField('links');
 
 	const [linkLabel, setLinkLabel] = useState('');

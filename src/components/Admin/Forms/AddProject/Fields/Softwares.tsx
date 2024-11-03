@@ -8,7 +8,7 @@ import {
 } from 'formik';
 import { getRandomHexColor } from '../../../../../utils/getRandomHexColor';
 import {
-	ProjectFormValues,
+	ProjectFormFieldsValues,
 	SoftwarePill
 } from '../../../../../types/AddProject';
 import { AdminPill } from '../../Pill';
@@ -18,7 +18,7 @@ import { AdminFieldWrapper } from '../../FieldWrapper';
 
 const AdminSoftwaresField = () => {
 	const { initialValues, setFieldError } =
-		useFormikContext<ProjectFormValues>();
+		useFormikContext<ProjectFormFieldsValues>();
 	const [field] = useField('softwares');
 
 	const [inputValue, setInputValue] = useState('');
