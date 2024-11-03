@@ -3,7 +3,8 @@ import * as Yup from 'yup';
 import AdminSoftwaresField from './Fields/Softwares';
 import {
 	CreateProjectRequest,
-	ProjectFormValues
+	ProjectFormFieldsValues,
+	ProjectFormInitialValues
 } from '../../../../types/AddProject';
 import { AdminProjectNameField } from './Fields/ProjectName';
 import { AdminCustomerNameField } from './Fields/CustomerName';
@@ -80,13 +81,13 @@ export const AdminAddProjectForm: React.FC<AdminAddProjectFormProps> = ({
 		}
 	});
 
-	const submitProjectForm = async (values: ProjectFormValues) => {
+	const submitProjectForm = async (values: ProjectFormFieldsValues) => {
 		const payload = mapProjectFormValuesToRequest(values);
 
 		await mutation.mutateAsync(payload);
 	};
 
-	const initialValues: ProjectFormValues = {
+	const initialValues: ProjectFormInitialValues = {
 		projectName: project?.name || '',
 		customerName: project?.customer || '',
 		description: project?.description || '',
@@ -94,6 +95,10 @@ export const AdminAddProjectForm: React.FC<AdminAddProjectFormProps> = ({
 		thumbnail: project?.thumbnail || '',
 		mediaImages: project?.media?.images || [],
 		mediaVideos: project?.media?.videos || [],
+		imagesUrls: [],
+		videosUrls: [],
+		imagesFiles: [],
+		videosFiles: [],
 		links: project?.links || [],
 		start_date: project?.start_date
 			? new Date(convertTimestampToDate(project.start_date))
