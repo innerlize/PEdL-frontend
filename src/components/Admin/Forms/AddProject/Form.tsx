@@ -35,8 +35,10 @@ const validationSchema = Yup.object({
 		.of(Yup.string())
 		.min(1, 'At least one software is required'),
 	thumbnail: Yup.string().required('Thumbnail is required'),
-	mediaImages: Yup.array().of(Yup.string().optional()),
-	mediaVideos: Yup.array().of(Yup.string().optional()),
+	imagesUrls: Yup.array().of(Yup.string().optional()),
+	imagesFiles: Yup.array().optional(),
+	videosUrls: Yup.array().of(Yup.string().optional()),
+	videosFiles: Yup.array().optional(),
 	links: Yup.array().of(
 		Yup.object({ label: Yup.string(), src: Yup.string() }).optional()
 	),
