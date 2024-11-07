@@ -55,3 +55,27 @@ export const updateProjectOrder = async (
 
 	return response.data;
 };
+
+export const deleteProject = async (
+	id: string,
+	token: string
+): Promise<unknown> => {
+	const response = await apiClient.delete(`/projects/${id}`, {
+		headers: { Authorization: `Bearer ${token}` }
+	});
+
+	return response.data;
+};
+
+export const deleteFileFromProject = async (
+	id: string,
+	fileUrl: string,
+	token: string
+): Promise<void> => {
+	const response = await apiClient.delete(`/projects/${id}/file`, {
+		data: { fileUrl: fileUrl },
+		headers: { Authorization: `Bearer ${token}` }
+	});
+
+	return response.data;
+};
