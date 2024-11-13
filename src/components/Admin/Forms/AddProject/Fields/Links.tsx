@@ -19,7 +19,7 @@ interface Link {
 	backgroundColor: string;
 }
 
-const AdminLinksField = () => {
+export const AdminLinksField: React.FC = () => {
 	const { initialValues, setFieldError } =
 		useFormikContext<ProjectFormFieldsValues>();
 	const [field] = useField('links');
@@ -163,5 +163,3 @@ const AdminLinksField = () => {
 		/>
 	);
 };
-
-export default AdminLinksField;
