@@ -17,23 +17,6 @@ export interface ProjectFormInitialValues {
 	links?: Link[];
 }
 
-export interface CreateProjectRequest {
-	name: string;
-	customer: string;
-	description: string;
-	softwares?: string[];
-	thumbnail?: string;
-	media?: {
-		imagesUrls?: string[];
-		imagesFiles?: File[];
-		videosUrls?: string[];
-		videosFiles?: File[];
-	};
-	start_date: Date;
-	end_date: Date;
-	links?: Link[];
-}
-
 export interface SoftwarePill {
 	name: string;
 	color: string;
