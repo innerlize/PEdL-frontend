@@ -9,6 +9,7 @@ import { AdminProjectNameField } from './Fields/ProjectName';
 import { AdminCustomerNameField } from './Fields/CustomerName';
 import { AdminDescriptionField } from './Fields/Description';
 import { AdminThumbnailField } from './Fields/Thumbnail';
+import { AdminMediaField } from './Fields/Media';
 import { AdminLinksField } from './Fields/Links';
 import { Spinner } from '../../../Spinner';
 import { toast, ToastContainer } from 'react-toastify';
@@ -133,9 +134,7 @@ export const AdminAddProjectForm: React.FC<AdminAddProjectFormProps> = ({
 
 						<AdminThumbnailField />
 
-						<AdminMediaImagesField />
-
-						<AdminMediaVideosField />
+						<AdminMediaField projectId={project?.id ?? ''} />
 
 						<AdminDatesField />
 
