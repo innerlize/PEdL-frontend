@@ -2,7 +2,6 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import AdminSoftwaresField from './Fields/Softwares';
 import {
-	CreateProjectRequest,
 	ProjectFormFieldsValues,
 	ProjectFormInitialValues
 } from '../../../../types/AddProject';
