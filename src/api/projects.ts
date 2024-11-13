@@ -70,10 +70,11 @@ export const deleteProject = async (
 export const deleteFileFromProject = async (
 	id: string,
 	fileUrl: string,
+	fileType: string,
 	token: string
 ): Promise<void> => {
 	const response = await apiClient.delete(`/projects/${id}/file`, {
-		data: { fileUrl: fileUrl },
+		data: { fileUrl, fileType },
 		headers: { Authorization: `Bearer ${token}` }
 	});
 
