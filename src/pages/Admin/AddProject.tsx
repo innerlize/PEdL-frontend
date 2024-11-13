@@ -17,7 +17,7 @@ const AdminAddProjectPage: React.FC = () => {
 	if (isLoading && isEditing) return <div>Loading...</div>;
 
 	return (
-		<div className='flex flex-col items-center gap-16 w-full pt-[52px] md:pt-[82px] md:gap-24'>
+		<div className='flex flex-col items-center gap-16 w-full pt-[52px] md:pt-[82px] md:gap-24 font-roboto'>
 			<AdminFormPageHeader
 				title={isEditing ? 'Updating project' : 'Creating project'}
 			/>
