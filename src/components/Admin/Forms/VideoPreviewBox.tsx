@@ -22,10 +22,16 @@ export const AdminVideoPreviewBox: React.FC<AdminVideoPreviewBoxProps> = ({
 				width={'100%'}
 				height={'100%'}
 				url={videoSrc}
-				light
+				controls
+				light={videoSrc.includes('youtube')}
 				config={{
 					youtube: {
-						playerVars: { showinfo: 0, rel: 0, modestbranding: 0 }
+						playerVars: { showinfo: 0, rel: 0, modestbranding: 1 }
+					},
+					file: {
+						attributes: {
+							controlsList: 'nodownload'
+						}
 					}
 				}}
 			/>
