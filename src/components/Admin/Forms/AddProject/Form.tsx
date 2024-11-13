@@ -20,6 +20,7 @@ import { AdminDatesField } from './Fields/Dates';
 import { mapProjectFormValuesToRequest } from '../../../../mappers/projectMapper';
 import { convertTimestampToDate } from '../../../../utils/convertTimestampToDate';
 import { Project } from '../../../../types/Portfolio';
+import { AxiosError } from 'axios';
 
 interface AdminAddProjectFormProps {
 	project?: Project;
@@ -76,8 +77,36 @@ export const AdminAddProjectForm: React.FC<AdminAddProjectFormProps> = ({
 				className: 'font-semibold'
 			});
 		},
-		onError: () => {
-			toast.error('Error creating project!');
+		onError: (err: AxiosError<{ message: string }>) => {
+			if (project) {
+				toast.error(
+					<>
+						<span className='text-warning font-bold'>
+							Error updating project!
+						</span>
+						<br />
+						<span className='text-sm'>{err.response?.data.message}</span>
+					</>,
+					{
+						icon: () => '🚨'
+					}
+				);
+
+				return;
+			}
+
+			toast.error(
+				<>
+					<span className='text-warning font-bold'>
+						Error creating project!
+					</span>
+					<br />
+					<span className='text-sm'>{err.response?.data.message}</span>
+				</>,
+				{
+					icon: () => '🚨'
+				}
+			);
 		}
 	});
 
