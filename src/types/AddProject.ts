@@ -7,9 +7,9 @@ export interface ProjectFormInitialValues {
 	softwares: string[];
 	thumbnail: string;
 	mediaImages?: string[];
+	mediaVideos?: string[];
 	imagesUrls?: string[];
 	imagesFiles?: File[];
-	mediaVideos?: string[];
 	videosUrls?: string[];
 	videosFiles?: File[];
 	start_date: Date | null;
