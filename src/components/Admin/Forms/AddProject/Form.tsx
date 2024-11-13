@@ -113,11 +113,7 @@ export const AdminAddProjectForm: React.FC<AdminAddProjectFormProps> = ({
 			<Formik
 				initialValues={initialValues}
 				validationSchema={validationSchema}
-				initialTouched={{
-					mediaImages: true,
-					mediaVideos: true,
-					links: true
-				}}
+				initialTouched={{ imagesUrls: true, videosUrls: true, links: true }}
 				onSubmit={values => submitProjectForm(values)}
 				enableReinitialize>
 				{({ isSubmitting }) => (
