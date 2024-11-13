@@ -54,7 +54,6 @@ export const AdminPartnerLogoField: React.FC = () => {
 			<AdminInputFieldHeader title='Partner logo' required helper={helper} />
 
 			<AdminSimpleInputType
-				type='text'
 				value={field.value ? field.value : logoUrl}
 				onChange={e => setLogoUrl(e.target.value)}
 				onKeyDown={async e => await addLogo(e)}

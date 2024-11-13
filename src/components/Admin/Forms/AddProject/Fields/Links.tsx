@@ -117,7 +117,6 @@ const AdminLinksField = () => {
 							</label>
 
 							<AdminSimpleInputType
-								type='text'
 								value={linkLabel}
 								onChange={e => setLinkLabel(e.target.value)}
 								onKeyDown={e => addLink(e, arrayHelpers)}
@@ -131,7 +130,6 @@ const AdminLinksField = () => {
 							</label>
 
 							<AdminSimpleInputType
-								type='text'
 								value={linkSrc}
 								onChange={e => setLinkSrc(e.target.value)}
 								onKeyDown={e => addLink(e, arrayHelpers)}

@@ -97,7 +97,6 @@ const AdminSoftwaresField = () => {
 					<AdminInputFieldHeader title='Softwares' required helper={helper} />
 
 					<AdminSimpleInputType
-						type='text'
 						value={inputValue}
 						onChange={e => setInputValue(e.target.value)}
 						onKeyDown={e => addSoftware(e, arrayHelpers)}
