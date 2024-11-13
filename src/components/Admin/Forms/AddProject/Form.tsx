@@ -167,7 +167,7 @@ export const AdminAddProjectForm: React.FC<AdminAddProjectFormProps> = ({
 
 						<button
 							type='submit'
-							className={`flex justify-center items-center w-[203px] h-[48px] mx-auto mt-[30px] font-roboto text-xl font-bold rounded-[3px] ${isSubmitting ? '' : 'bg-primary'} md:text-2xl`}
+							className={`flex justify-center items-center w-[203px] h-[48px] mx-auto mt-[30px] text-xl font-bold rounded-[3px] ${isSubmitting ? '' : 'bg-primary'} md:text-2xl`}
 							disabled={isSubmitting}>
 							{isSubmitting ? (
 								<Spinner color='#00C896' />
