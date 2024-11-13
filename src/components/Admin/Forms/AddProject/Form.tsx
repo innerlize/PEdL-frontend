@@ -54,7 +54,7 @@ export const AdminAddProjectForm: React.FC<AdminAddProjectFormProps> = ({
 	const { getCurrentUserToken } = useAuth();
 
 	const mutation = useMutation({
-		mutationFn: async (newProject: CreateProjectRequest) => {
+		mutationFn: async (newProject: FormData) => {
 			const token = await getCurrentUserToken();
 
 			if (project) {
