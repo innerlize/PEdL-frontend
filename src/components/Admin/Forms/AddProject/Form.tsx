@@ -96,8 +96,8 @@ export const AdminAddProjectForm: React.FC<AdminAddProjectFormProps> = ({
 		mediaImages: project?.media?.images || [],
 		mediaVideos: project?.media?.videos || [],
 		imagesUrls: [],
-		videosUrls: [],
 		imagesFiles: [],
+		videosUrls: [],
 		videosFiles: [],
 		links: project?.links || [],
 		start_date: project?.start_date
