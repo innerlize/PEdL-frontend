@@ -14,7 +14,7 @@ export const projects = [
 			],
 			videos: [
 				'https://via.placeholder.com/250',
-				'https://via.placeholder.com/250'
+				'https://www.youtube.com/watch?v=5OWOQF3dWi0'
 			]
 		},
 		start_date: {
