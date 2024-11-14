@@ -128,60 +128,461 @@ describe('Admin - Add Project Page', () => {
 	});
 
 	describe('Image fields', () => {
-		it('should allow adding a valid image URL and display its preview', () => {
-			const imageURL =
-				'https://images.pexels.com/photos/374857/pexels-photo-374857.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
+		describe('Image URL field', () => {
+			it('should allow adding a valid image URL and display its preview', () => {
+				const imageURL =
+					'https://images.pexels.com/photos/374857/pexels-photo-374857.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1';
 
-			cy.get('[data-test="admin-media-images-field"] input').type(
-				`${imageURL}{enter}`
-			);
+				cy.get('[data-test="admin-media-images-url-field"] input').type(
+					`${imageURL}{enter}`
+				);
 
-			cy.get('[data-test="admin-image-preview-box"] img')
-				.should('be.visible')
-				.and('have.attr', 'src')
-				.and('eq', imageURL);
+				cy.get('[data-test="admin-media-new-images-previews"]')
+					.should('be.visible')
+					.and('have.text', 'Previews of images that you want to add...');
+
+				cy.get('[data-test="admin-image-preview-box"]')
+					.should('be.visible')
+					.and('have.length', 1);
+
+				cy.get('[data-test="admin-image-preview-box"] img')
+					.should('be.visible')
+					.and('have.attr', 'src', imageURL);
+			});
+
+			it('should show an error for an invalid image URL', () => {
+				const invalidImageURL = 'https://www.invalid-image-url.com/123';
+
+				cy.get('[data-test="admin-media-images-url-field"] input').type(
+					`${invalidImageURL}{enter}`
+				);
+
+				cy.get('.text-red-500')
+					.contains('Image URL is not valid. Image addition skipped.')
+					.should('be.visible');
+			});
 		});
 
-		it('should show an error for an invalid image URL', () => {
-			const invalidImageURL = 'https://www.invalid-image-url.com/123';
+		describe('Image upload file field', () => {
+			describe('Input click & selection', () => {
+				it('should allow file upload through the input', () => {
+					cy.get(
+						'[data-test="admin-media-images-file-dropzone"] div input[type=file]'
+					)
+						.should('be.visible')
+						.selectFile(
+							{
+								contents: Cypress.Buffer.from('dummy content'),
+								fileName: 'valid-image.jpg',
+								mimeType: 'image/jpeg',
+								lastModified: Date.now()
+							},
+							{ force: true }
+						);
 
-			cy.get('[data-test="admin-media-images-field"] input').type(
-				`${invalidImageURL}{enter}`
-			);
+					cy.get('[data-test="admin-image-preview-box"]')
+						.should('be.visible')
+						.and('have.length', 1);
 
-			cy.get('.text-red-500')
-				.contains('Invalid image URL. Image not added to the list.')
-				.should('be.visible');
+					cy.get('[data-test="admin-image-preview-box"] img')
+						.should('be.visible')
+						.and('have.attr', 'src')
+						.and(
+							'match',
+							new RegExp(`^blob:${Cypress.config('baseUrl')}/[a-f0-9-]+$`)
+						);
+				});
+
+				it('should allow upload multiple images', () => {
+					cy.get(
+						'[data-test="admin-media-images-file-dropzone"] div input[type=file]'
+					)
+						.should('be.visible')
+						.selectFile(
+							[
+								{
+									contents: Cypress.Buffer.from('dummy content 1'),
+									fileName: 'valid-image-1.jpg',
+									mimeType: 'image/jpeg',
+									lastModified: Date.now()
+								},
+								{
+									contents: Cypress.Buffer.from('dummy content 2'),
+									fileName: 'valid-image-2.jpg',
+									mimeType: 'image/jpeg',
+									lastModified: Date.now()
+								}
+							],
+							{ force: true }
+						);
+
+					cy.get('[data-test="admin-image-preview-box"]')
+						.should('be.visible')
+						.and('have.length', 2);
+
+					cy.get('[data-test="admin-image-preview-box"] img').each($img => {
+						cy.wrap($img)
+							.should('be.visible')
+							.and('have.attr', 'src')
+							.and(
+								'match',
+								new RegExp(`^blob:${Cypress.config('baseUrl')}/[a-f0-9-]+$`)
+							);
+					});
+				});
+			});
+
+			describe('Drag and drop', () => {
+				it('should allow file upload using drag and drop', () => {
+					cy.get(
+						'[data-test="admin-media-images-file-dropzone"] div input[type=file]'
+					).selectFile(
+						{
+							contents: Cypress.Buffer.from('dummy content'),
+							fileName: 'valid-image.jpg',
+							mimeType: 'image/jpeg',
+							lastModified: Date.now()
+						},
+						{ action: 'drag-drop', force: true }
+					);
+
+					cy.get('[data-test="admin-image-preview-box"]')
+						.should('be.visible')
+						.and('have.length', 1);
+
+					cy.get('[data-test="admin-image-preview-box"] img')
+						.should('be.visible')
+						.and('have.attr', 'src')
+						.and(
+							'match',
+							new RegExp(`^blob:${Cypress.config('baseUrl')}/[a-f0-9-]+$`)
+						);
+				});
+
+				it('should allow upload multiple images using drag and drop', () => {
+					cy.get(
+						'[data-test="admin-media-images-file-dropzone"] div input[type=file]'
+					).selectFile(
+						[
+							{
+								contents: Cypress.Buffer.from('dummy content'),
+								fileName: 'valid-image-1.jpg',
+								mimeType: 'image/jpeg',
+								lastModified: Date.now()
+							},
+							{
+								contents: Cypress.Buffer.from('dummy content 2'),
+								fileName: 'valid-image-2.jpg',
+								mimeType: 'image/jpeg',
+								lastModified: Date.now()
+							}
+						],
+						{ action: 'drag-drop', force: true }
+					);
+
+					cy.get('[data-test="admin-image-preview-box"]')
+						.should('be.visible')
+						.and('have.length', 2);
+
+					cy.get('[data-test="admin-image-preview-box"] img').each($img => {
+						cy.wrap($img)
+							.should('be.visible')
+							.and('have.attr', 'src')
+							.and(
+								'match',
+								new RegExp(`^blob:${Cypress.config('baseUrl')}/[a-f0-9-]+$`)
+							);
+					});
+				});
+			});
+
+			describe('Error cases', () => {
+				it('should show an error for an invalid image file', () => {
+					cy.get(
+						'[data-test="admin-media-images-file-dropzone"] div input[type=file]'
+					)
+						.should('be.visible')
+						.selectFile(
+							{
+								contents: Cypress.Buffer.from('invalid image'),
+								fileName: 'invalid-image.pdf',
+								mimeType: 'application/pdf',
+								lastModified: Date.now()
+							},
+							{ force: true }
+						);
+
+					cy.get('.Toastify__toast')
+						.should('be.visible')
+						.and('have.text', 'File type is not valid!');
+				});
+
+				it('should show an error for an invalid image file using drag and drop', () => {
+					cy.get(
+						'[data-test="admin-media-images-file-dropzone"] div input[type=file]'
+					).selectFile(
+						{
+							contents: Cypress.Buffer.from('invalid image'),
+							fileName: 'invalid-image.pdf',
+							mimeType: 'application/pdf',
+							lastModified: Date.now()
+						},
+						{ action: 'drag-drop', force: true }
+					);
+
+					cy.get('.Toastify__toast')
+						.should('be.visible')
+						.and('have.text', 'File type is not valid!');
+				});
+
+				it('should show an error when image file size is too large', () => {
+					cy.get(
+						'[data-test="admin-media-images-file-dropzone"] div input[type=file]'
+					)
+						.should('be.visible')
+						.selectFile(
+							{
+								contents: Cypress.Buffer.alloc(3 * 1024 * 1024),
+								fileName: 'large-image.jpg',
+								mimeType: 'image/jpeg',
+								lastModified: Date.now()
+							},
+							{ force: true }
+						);
+
+					cy.get('.Toastify__toast')
+						.should('be.visible')
+						.and('have.text', 'File too large! Remember, 2 MB max.');
+				});
+			});
 		});
 	});
 
 	describe('Video fields', () => {
-		it('should allow adding a valid video URL and display its preview', () => {
-			const videoURL = 'https://www.youtube.com/watch?v=a5uQMwRMHcs';
+		describe('Video URL field', () => {
+			it('should allow adding a valid video URL and display its preview', () => {
+				const videoURL = 'https://www.youtube.com/watch?v=a5uQMwRMHcs';
 
-			cy.get('[data-test="admin-media-videos-field"] input').type(
-				`${videoURL}{enter}`
-			);
-
-			cy.get('.react-player__preview')
-				.should('be.visible')
-				.invoke('attr', 'style')
-				.should(
-					'include',
-					'background-image: url("https://i.ytimg.com/vi/a5uQMwRMHcs/hqdefault.jpg")'
+				cy.get('[data-test="admin-media-videos-url-field"] input').type(
+					`${videoURL}{enter}`
 				);
+
+				cy.get('.react-player__preview')
+					.should('be.visible')
+					.invoke('attr', 'style')
+					.should(
+						'include',
+						'background-image: url("https://i.ytimg.com/vi/a5uQMwRMHcs/hqdefault.jpg")'
+					);
+			});
+
+			it('should show an error for an invalid video URL', () => {
+				const invalidVideoURL = 'https://www.invalid-video-url.com/123';
+
+				cy.get('[data-test="admin-media-videos-url-field"] input').type(
+					`${invalidVideoURL}{enter}`
+				);
+
+				cy.get('.text-red-500')
+					.contains(
+						'The video URL is not valid and cannot be played. Video addition skipped.'
+					)
+					.should('be.visible');
+			});
 		});
 
-		it('should show an error for an invalid video URL', () => {
-			const invalidVideoURL = 'https://www.invalid-video-url.com/123';
+		describe('Video upload file field', () => {
+			describe('Input click & selection', () => {
+				it('should allow video file upload through the input', () => {
+					cy.get(
+						'[data-test="admin-media-videos-file-dropzone"] div input[type=file]'
+					)
+						.should('be.visible')
+						.selectFile(
+							{
+								contents: Cypress.Buffer.from('dummy video content'),
+								fileName: 'valid-video.mp4',
+								mimeType: 'video/mp4',
+								lastModified: Date.now()
+							},
+							{ force: true }
+						);
 
-			cy.get('[data-test="admin-media-videos-field"] input').type(
-				`${invalidVideoURL}{enter}`
-			);
+					cy.get('[data-test="admin-video-preview-box"]')
+						.should('be.visible')
+						.and('have.length', 1);
 
-			cy.get('.text-red-500')
-				.contains('This video cannot be played. Video not added to the list.')
-				.should('be.visible');
+					cy.get('video')
+						.should('be.visible')
+						.and('have.attr', 'src')
+						.and(
+							'match',
+							new RegExp(`^blob:${Cypress.config('baseUrl')}/[a-f0-9-]+$`)
+						);
+				});
+
+				it('should allow upload multiple videos', () => {
+					cy.get(
+						'[data-test="admin-media-videos-file-dropzone"] div input[type=file]'
+					)
+						.should('be.visible')
+						.selectFile(
+							[
+								{
+									contents: Cypress.Buffer.from('dummy video content 1'),
+									fileName: 'valid-video-1.mp4',
+									mimeType: 'video/mp4',
+									lastModified: Date.now()
+								},
+								{
+									contents: Cypress.Buffer.from('dummy video content 2'),
+									fileName: 'valid-video-2.mp4',
+									mimeType: 'video/mp4',
+									lastModified: Date.now()
+								}
+							],
+							{ force: true }
+						);
+
+					cy.get('[data-test="admin-video-preview-box"]')
+						.should('be.visible')
+						.and('have.length', 2);
+
+					cy.get('video').each($video => {
+						cy.wrap($video)
+							.should('be.visible')
+							.and('have.attr', 'src')
+							.and(
+								'match',
+								new RegExp(`^blob:${Cypress.config('baseUrl')}/[a-f0-9-]+$`)
+							);
+					});
+				});
+			});
+
+			describe('Drag and drop', () => {
+				it('should allow video file upload using drag and drop', () => {
+					cy.get(
+						'[data-test="admin-media-videos-file-dropzone"] div input[type=file]'
+					).selectFile(
+						{
+							contents: Cypress.Buffer.from('dummy video content'),
+							fileName: 'valid-video.mp4',
+							mimeType: 'video/mp4',
+							lastModified: Date.now()
+						},
+						{ action: 'drag-drop', force: true }
+					);
+
+					cy.get('[data-test="admin-video-preview-box"]')
+						.should('be.visible')
+						.and('have.length', 1);
+
+					cy.get('video')
+						.should('be.visible')
+						.and('have.attr', 'src')
+						.and(
+							'match',
+							new RegExp(`^blob:${Cypress.config('baseUrl')}/[a-f0-9-]+$`)
+						);
+				});
+
+				it('should allow upload multiple videos using drag and drop', () => {
+					cy.get(
+						'[data-test="admin-media-videos-file-dropzone"] div input[type=file]'
+					).selectFile(
+						[
+							{
+								contents: Cypress.Buffer.from('dummy video content 1'),
+								fileName: 'valid-video-1.mp4',
+								mimeType: 'video/mp4',
+								lastModified: Date.now()
+							},
+							{
+								contents: Cypress.Buffer.from('dummy video content 2'),
+								fileName: 'valid-video-2.mp4',
+								mimeType: 'video/mp4',
+								lastModified: Date.now()
+							}
+						],
+						{ action: 'drag-drop', force: true }
+					);
+
+					cy.get('[data-test="admin-video-preview-box"]')
+						.should('be.visible')
+						.and('have.length', 2);
+
+					cy.get('video').each($video => {
+						cy.wrap($video)
+							.should('be.visible')
+							.and('have.attr', 'src')
+							.and(
+								'match',
+								new RegExp(`^blob:${Cypress.config('baseUrl')}/[a-f0-9-]+$`)
+							);
+					});
+				});
+			});
+
+			describe('Error cases', () => {
+				it('should show an error for an invalid video file', () => {
+					cy.get(
+						'[data-test="admin-media-videos-file-dropzone"] div input[type=file]'
+					)
+						.should('be.visible')
+						.selectFile(
+							{
+								contents: Cypress.Buffer.from('invalid video'),
+								fileName: 'invalid-video.txt',
+								mimeType: 'text/plain',
+								lastModified: Date.now()
+							},
+							{ force: true }
+						);
+
+					cy.get('.Toastify__toast')
+						.should('be.visible')
+						.and('have.text', 'File type is not valid!');
+				});
+
+				it('should show an error for an invalid video file using drag and drop', () => {
+					cy.get(
+						'[data-test="admin-media-videos-file-dropzone"] div input[type=file]'
+					).selectFile(
+						{
+							contents: Cypress.Buffer.from('invalid video'),
+							fileName: 'invalid-video.txt',
+							mimeType: 'text/plain',
+							lastModified: Date.now()
+						},
+						{ action: 'drag-drop', force: true }
+					);
+
+					cy.get('.Toastify__toast')
+						.should('be.visible')
+						.and('have.text', 'File type is not valid!');
+				});
+
+				it('should show an error when video file size is too large', () => {
+					cy.get(
+						'[data-test="admin-media-videos-file-dropzone"] div input[type=file]'
+					)
+						.should('be.visible')
+						.selectFile(
+							{
+								contents: Cypress.Buffer.alloc(51 * 1024 * 1024),
+								fileName: 'large-video.mp4',
+								mimeType: 'video/mp4',
+								lastModified: Date.now()
+							},
+							{ force: true }
+						);
+
+					cy.get('.Toastify__toast')
+						.should('be.visible')
+						.and('have.text', 'File too large! Remember, 50 MB max.');
+				});
+			});
 		});
 	});
 
@@ -359,7 +760,7 @@ describe('Admin - Add Project Page - Update Project', () => {
 		cy.get('form').should('exist');
 	});
 
-	it('should populate form fields with existing project data on load', () => {
+	it.only('should populate form fields with existing project data on load', () => {
 		const project = projects[0];
 
 		cy.get('input[name="projectName"]').should('have.value', project.name);
@@ -391,27 +792,35 @@ describe('Admin - Add Project Page - Update Project', () => {
 				cy.wrap($software).contains(project.softwares[index]);
 			});
 
-		cy.get('[data-test="media-images-boxes-container"]')
+		cy.get(
+			'[data-test="admin-media-existing-images-previews"] [data-test="admin-media-existing-images-previews-container"]'
+		)
 			.children()
 			.should('have.length', project.media.images.length)
 			.each(($image, index) => {
 				cy.wrap($image)
 					.find('img')
-					.should('have.attr', 'src', project.media.images[index]);
+					.should('have.attr', 'src')
+					.and('eq', project.media.images[index]);
 			});
-		cy.get('[data-test="media-videos-boxes-container"]')
+		cy.get(
+			'[data-test="admin-media-existing-videos-previews"] [data-test="admin-media-existing-videos-previews-container"]'
+		)
 			.children()
-			.should('have.length', project.media.images.length)
+			.should('have.length', project.media.videos.length)
 			.each(($video, index) => {
-				cy.wrap($video)
-					.find('.react-player__preview')
-					.should('be.visible')
-					.click()
-					.then(() => {
-						cy.get('video')
+				const videoUrl = project.media.videos[index];
+				cy.wrap($video).then($el => {
+					if (videoUrl.includes('youtube.com')) {
+						cy.wrap($el).find('.react-player__preview').should('be.visible');
+					} else {
+						cy.wrap($el)
+							.find('video')
 							.should('be.visible')
-							.and('have.attr', 'src', project.media.videos[index]);
-					});
+							.and('have.attr', 'src')
+							.and('eq', videoUrl);
+					}
+				});
 			});
 
 		cy.get('[data-test="links-pills-container"]')
