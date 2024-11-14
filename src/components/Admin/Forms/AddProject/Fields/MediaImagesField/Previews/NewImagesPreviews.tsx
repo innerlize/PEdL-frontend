@@ -43,7 +43,7 @@ export const NewImagesPreviews = () => {
 	}, [values.imagesUrls, values.imagesFiles]);
 
 	return (
-		<div>
+		<div data-test='admin-media-new-images-previews'>
 			{previewUrls.length > 0 ? (
 				<>
 					<p className='mb-2 text-sm font-medium'>

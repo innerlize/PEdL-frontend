@@ -37,12 +37,14 @@ export const ExistingImagesPreviews: React.FC<
 	});
 
 	return (
-		<div>
+		<div data-test='admin-media-existing-images-previews'>
 			{existingImages.length ? (
 				<>
 					<p className='mb-2 text-sm font-medium'>Images</p>
 
-					<div className='flex gap-2 flex-wrap'>
+					<div
+						data-test='admin-media-existing-images-previews-container'
+						className='flex gap-2 flex-wrap'>
 						<PhotoProvider brokenElement={<AdminImageBrokenElement />}>
 							{existingImages.map((url, index) => {
 								return (

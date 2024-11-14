@@ -34,12 +34,14 @@ export const ExistingVideosPreviews: React.FC<
 	});
 
 	return (
-		<div>
+		<div data-test='admin-media-existing-videos-previews'>
 			{existingVideos.length ? (
 				<>
 					<p className='mb-2 text-sm font-medium'>Videos</p>
 
-					<div className='flex gap-2 flex-wrap'>
+					<div
+						data-test='admin-media-existing-videos-previews-container'
+						className='flex gap-2 flex-wrap'>
 						{existingVideos.map((url, index) => (
 							<AdminVideoPreviewBox
 								key={index}

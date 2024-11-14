@@ -41,7 +41,7 @@ export const NewVideosPreviews = () => {
 	}, [values.videosUrls, values.videosFiles]);
 
 	return (
-		<div>
+		<div data-test='admin-media-new-videos-previews'>
 			{previewUrls.length > 0 ? (
 				<>
 					<p className='mb-2 text-sm font-medium'>

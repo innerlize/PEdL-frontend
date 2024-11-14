@@ -96,7 +96,9 @@ export const ImagesFilesField: React.FC = () => {
 	});
 
 	return (
-		<div className='w-full cursor-pointer'>
+		<div
+			data-test='admin-media-images-file-dropzone'
+			className='w-full cursor-pointer'>
 			<div
 				{...getRootProps()}
 				className={clsx(

@@ -90,7 +90,9 @@ export const VideosFilesField: React.FC = () => {
 	});
 
 	return (
-		<div className='w-full cursor-pointer'>
+		<div
+			data-test='admin-media-videos-file-dropzone'
+			className='w-full cursor-pointer'>
 			<div
 				{...getRootProps()}
 				className={clsx(
