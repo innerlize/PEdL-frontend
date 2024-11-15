@@ -11,7 +11,7 @@ import { getRandomHexColor } from '../../../../../utils/getRandomHexColor';
 import { AdminSimpleInputType } from '../../Inputs/SimpleInput';
 import { AdminInputFieldHeader } from '../../InputFieldHeader';
 import { AdminFieldWrapper } from '../../FieldWrapper';
-import { ProjectFormValues } from '../../../../../types/AddProject';
+import { ProjectFormFieldsValues } from '../../../../../types/AddProject';
 
 interface Link {
 	label: string;
@@ -19,9 +19,9 @@ interface Link {
 	backgroundColor: string;
 }
 
-const AdminLinksField = () => {
+export const AdminLinksField: React.FC = () => {
 	const { initialValues, setFieldError } =
-		useFormikContext<ProjectFormValues>();
+		useFormikContext<ProjectFormFieldsValues>();
 	const [field] = useField('links');
 
 	const [linkLabel, setLinkLabel] = useState('');
@@ -117,7 +117,6 @@ const AdminLinksField = () => {
 							</label>
 
 							<AdminSimpleInputType
-								type='text'
 								value={linkLabel}
 								onChange={e => setLinkLabel(e.target.value)}
 								onKeyDown={e => addLink(e, arrayHelpers)}
@@ -131,7 +130,6 @@ const AdminLinksField = () => {
 							</label>
 
 							<AdminSimpleInputType
-								type='text'
 								value={linkSrc}
 								onChange={e => setLinkSrc(e.target.value)}
 								onKeyDown={e => addLink(e, arrayHelpers)}
@@ -165,5 +163,3 @@ const AdminLinksField = () => {
 		/>
 	);
 };
-
-export default AdminLinksField;

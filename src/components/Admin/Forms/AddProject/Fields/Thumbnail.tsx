@@ -54,7 +54,6 @@ export const AdminThumbnailField: React.FC = () => {
 			<AdminInputFieldHeader title='Thumbnail' required helper={helper} />
 
 			<AdminSimpleInputType
-				type='text'
 				value={field.value ? field.value : thumbnail}
 				onChange={e => setThumbnail(e.target.value)}
 				onKeyDown={async e => await addThumbnail(e)}

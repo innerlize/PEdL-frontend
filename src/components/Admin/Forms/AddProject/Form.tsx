@@ -2,16 +2,15 @@ import { Formik, Form } from 'formik';
 import * as Yup from 'yup';
 import AdminSoftwaresField from './Fields/Softwares';
 import {
-	CreateProjectRequest,
-	ProjectFormValues
+	ProjectFormFieldsValues,
+	ProjectFormInitialValues
 } from '../../../../types/AddProject';
 import { AdminProjectNameField } from './Fields/ProjectName';
 import { AdminCustomerNameField } from './Fields/CustomerName';
 import { AdminDescriptionField } from './Fields/Description';
 import { AdminThumbnailField } from './Fields/Thumbnail';
-import { AdminMediaImagesField } from './Fields/MediaImages';
-import { AdminMediaVideosField } from './Fields/MediaVideos';
-import AdminLinksField from './Fields/Links';
+import { AdminMediaField } from './Fields/Media';
+import { AdminLinksField } from './Fields/Links';
 import { Spinner } from '../../../Spinner';
 import { toast, ToastContainer } from 'react-toastify';
 import { useMutation } from '@tanstack/react-query';
@@ -21,6 +20,7 @@ import { AdminDatesField } from './Fields/Dates';
 import { mapProjectFormValuesToRequest } from '../../../../mappers/projectMapper';
 import { convertTimestampToDate } from '../../../../utils/convertTimestampToDate';
 import { Project } from '../../../../types/Portfolio';
+import { AxiosError } from 'axios';
 
 interface AdminAddProjectFormProps {
 	project?: Project;
@@ -34,8 +34,10 @@ const validationSchema = Yup.object({
 		.of(Yup.string())
 		.min(1, 'At least one software is required'),
 	thumbnail: Yup.string().required('Thumbnail is required'),
-	mediaImages: Yup.array().of(Yup.string().optional()),
-	mediaVideos: Yup.array().of(Yup.string().optional()),
+	imagesUrls: Yup.array().of(Yup.string().optional()),
+	imagesFiles: Yup.array().optional(),
+	videosUrls: Yup.array().of(Yup.string().optional()),
+	videosFiles: Yup.array().optional(),
 	links: Yup.array().of(
 		Yup.object({ label: Yup.string(), src: Yup.string() }).optional()
 	),
@@ -51,7 +53,7 @@ export const AdminAddProjectForm: React.FC<AdminAddProjectFormProps> = ({
 	const { getCurrentUserToken } = useAuth();
 
 	const mutation = useMutation({
-		mutationFn: async (newProject: CreateProjectRequest) => {
+		mutationFn: async (newProject: FormData) => {
 			const token = await getCurrentUserToken();
 
 			if (project) {
@@ -75,18 +77,46 @@ export const AdminAddProjectForm: React.FC<AdminAddProjectFormProps> = ({
 				className: 'font-semibold'
 			});
 		},
-		onError: () => {
-			toast.error('Error creating project!');
+		onError: (err: AxiosError<{ message: string }>) => {
+			if (project) {
+				toast.error(
+					<>
+						<span className='text-warning font-bold'>
+							Error updating project!
+						</span>
+						<br />
+						<span className='text-sm'>{err.response?.data.message}</span>
+					</>,
+					{
+						icon: () => '🚨'
+					}
+				);
+
+				return;
+			}
+
+			toast.error(
+				<>
+					<span className='text-warning font-bold'>
+						Error creating project!
+					</span>
+					<br />
+					<span className='text-sm'>{err.response?.data.message}</span>
+				</>,
+				{
+					icon: () => '🚨'
+				}
+			);
 		}
 	});
 
-	const submitProjectForm = async (values: ProjectFormValues) => {
+	const submitProjectForm = async (values: ProjectFormFieldsValues) => {
 		const payload = mapProjectFormValuesToRequest(values);
 
 		await mutation.mutateAsync(payload);
 	};
 
-	const initialValues: ProjectFormValues = {
+	const initialValues: ProjectFormInitialValues = {
 		projectName: project?.name || '',
 		customerName: project?.customer || '',
 		description: project?.description || '',
@@ -94,6 +124,10 @@ export const AdminAddProjectForm: React.FC<AdminAddProjectFormProps> = ({
 		thumbnail: project?.thumbnail || '',
 		mediaImages: project?.media?.images || [],
 		mediaVideos: project?.media?.videos || [],
+		imagesUrls: [],
+		imagesFiles: [],
+		videosUrls: [],
+		videosFiles: [],
 		links: project?.links || [],
 		start_date: project?.start_date
 			? new Date(convertTimestampToDate(project.start_date))
@@ -108,11 +142,7 @@ export const AdminAddProjectForm: React.FC<AdminAddProjectFormProps> = ({
 			<Formik
 				initialValues={initialValues}
 				validationSchema={validationSchema}
-				initialTouched={{
-					mediaImages: true,
-					mediaVideos: true,
-					links: true
-				}}
+				initialTouched={{ imagesUrls: true, videosUrls: true, links: true }}
 				onSubmit={values => submitProjectForm(values)}
 				enableReinitialize>
 				{({ isSubmitting }) => (
@@ -129,9 +159,7 @@ export const AdminAddProjectForm: React.FC<AdminAddProjectFormProps> = ({
 
 						<AdminThumbnailField />
 
-						<AdminMediaImagesField />
-
-						<AdminMediaVideosField />
+						<AdminMediaField projectId={project?.id ?? ''} />
 
 						<AdminDatesField />
 
@@ -139,7 +167,7 @@ export const AdminAddProjectForm: React.FC<AdminAddProjectFormProps> = ({
 
 						<button
 							type='submit'
-							className={`flex justify-center items-center w-[203px] h-[48px] mx-auto mt-[30px] font-roboto text-xl font-bold rounded-[3px] ${isSubmitting ? '' : 'bg-primary'} md:text-2xl`}
+							className={`flex justify-center items-center w-[203px] h-[48px] mx-auto mt-[30px] text-xl font-bold rounded-[3px] ${isSubmitting ? '' : 'bg-primary'} md:text-2xl`}
 							disabled={isSubmitting}>
 							{isSubmitting ? (
 								<Spinner color='#00C896' />

@@ -2,7 +2,7 @@ import { FieldInputProps } from 'formik';
 import React from 'react';
 
 interface AdminSimpleInputTypeProps
-	extends React.InputHTMLAttributes<HTMLInputElement> {
+	extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
 	field?: FieldInputProps<string>;
 }
 

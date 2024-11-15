@@ -1,4 +1,6 @@
-export interface ProjectFormValues {
+export interface ProjectFormFieldsValues extends ProjectFormInitialValues {}
+
+export interface ProjectFormInitialValues {
 	projectName: string;
 	customerName: string;
 	description: string;
@@ -6,23 +8,12 @@ export interface ProjectFormValues {
 	thumbnail: string;
 	mediaImages?: string[];
 	mediaVideos?: string[];
+	imagesUrls?: string[];
+	imagesFiles?: File[];
+	videosUrls?: string[];
+	videosFiles?: File[];
 	start_date: Date | null;
 	end_date: Date | null;
-	links?: Link[];
-}
-
-export interface CreateProjectRequest {
-	name: string;
-	customer: string;
-	description: string;
-	softwares?: string[];
-	thumbnail?: string;
-	media?: {
-		images?: string[];
-		videos?: string[];
-	};
-	start_date: Date;
-	end_date: Date;
 	links?: Link[];
 }
 
