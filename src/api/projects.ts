@@ -1,6 +1,6 @@
 import { apiClient } from '../config/axios';
 import { CreateProjectRequest } from '../types/AddProject';
-import { Project } from '../types/Portfolio';
+import { AppName, Project } from '../types/Portfolio';
 
 export const getProjects = async (): Promise<Project[]> => {
 	const response = await apiClient.get('/projects');
@@ -44,6 +44,23 @@ export const deleteProject = async (
 	const response = await apiClient.delete(`/projects/${id}`, {
 		headers: { Authorization: `Bearer ${token}` }
 	});
+
+	return response.data;
+};
+
+export const updateProjectOrder = async (
+	id: string,
+	newOrder: number,
+	app: AppName,
+	token: string
+): Promise<unknown> => {
+	const response = await apiClient.patch(
+		`/projects/${id}/order`,
+		{ newOrder, app },
+		{
+			headers: { Authorization: `Bearer ${token}` }
+		}
+	);
 
 	return response.data;
 };

@@ -10,7 +10,7 @@ describe('Admin - AuthPage', () => {
 		cy.get('button').contains('Time to show my credentials!');
 	});
 
-	describe('Admin - Panel Pages', () => {
+	describe('Admin - AuthPage with Mocked Google Login', () => {
 		beforeEach(() => {
 			cy.intercept('POST', 'api/admin/auth/verify-admin-access', {
 				statusCode: 200,
@@ -53,20 +53,8 @@ describe('Admin - AuthPage', () => {
 			cy.visit('/admin-panel/portfolio');
 
 			cy.get('button').contains('Logout').click();
+
+			cy.wait('@REVOKE_TOKEN');
 		});
 	});
-
-	// it('should display an error if login fails', () => {
-	// 	cy.visit('/admin-panel/auth');
-
-	// 	// Simulate a failed Google login
-	// 	cy.window().then(win => {
-	// 		cy.stub(win, 'signInWithPopup').rejects(new Error('Login failed'));
-	// 	});
-
-	// 	cy.get('button').contains('Time to show my credentials!').click();
-
-	// 	// Verify error message is displayed
-	// 	cy.contains('Seems like you’re in the wrong place!').should('be.visible');
-	// });
 });

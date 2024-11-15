@@ -34,7 +34,11 @@ export const projects = [
 				label: 'Link 2',
 				src: 'https://www.google.com'
 			}
-		]
+		],
+		order: {
+			pedl: 1,
+			cofcof: 1
+		}
 	},
 
 	{
@@ -71,7 +75,11 @@ export const projects = [
 				label: 'Link 2',
 				src: 'https://www.google.com'
 			}
-		]
+		],
+		order: {
+			pedl: 2,
+			cofcof: 2
+		}
 	},
 
 	{
@@ -109,7 +117,11 @@ export const projects = [
 				label: 'Link 2',
 				src: 'https://www.google.com'
 			}
-		]
+		],
+		order: {
+			pedl: 3,
+			cofcof: 3
+		}
 	},
 
 	{
@@ -147,7 +159,11 @@ export const projects = [
 				label: 'Link 2',
 				src: 'https://www.google.com'
 			}
-		]
+		],
+		order: {
+			pedl: 4,
+			cofcof: 4
+		}
 	}
 ];
 
@@ -186,7 +202,11 @@ export const projectCreatedResponse = {
 				label: 'Live Demo',
 				src: 'https://example.com/live-demo'
 			}
-		]
+		],
+		order: {
+			pedl: 1,
+			cofcof: 1
+		}
 	}
 };
 
@@ -228,6 +248,10 @@ export const projectUpdatedResponse = {
 				label: 'Link 2',
 				src: 'https://www.google.com'
 			}
-		]
+		],
+		order: {
+			pedl: 1,
+			cofcof: 1
+		}
 	}
 };

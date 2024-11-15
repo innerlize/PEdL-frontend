@@ -5,17 +5,21 @@ import { useConfirmModal } from '../../../hooks/useConfirmModal';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteProject } from '../../../api/projects';
 import { useAuth } from '../../../hooks/useAuth';
+import clsx from 'clsx';
+import { AppName } from '../../../types/Portfolio';
 
 interface AdminProjectCardProps {
 	id: string;
 	name: string;
 	thumbnail: string;
+	app?: AppName;
 }
 
 export const AdminProjectCard: React.FC<AdminProjectCardProps> = ({
 	id,
 	name,
-	thumbnail
+	thumbnail,
+	app
 }) => {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const { showModal } = useConfirmModal();
@@ -52,11 +56,13 @@ export const AdminProjectCard: React.FC<AdminProjectCardProps> = ({
 	};
 
 	return (
-		<div data-test={`project-card-${id}`} className='size-full'>
+		<div
+			data-test={`project-card-${id}`}
+			className='relative w-[150px] h-[60px] md:w-[200px] md:h-[80px] xl:w-[250px] xl:h-[100px] 2xl:w-[300px] 2xl:h-[120px]'>
 			<div
 				data-test='project-card-delete-button'
 				onClick={handleShowModal}
-				className='absolute text-[24px] p-[6px] text-center top-[5px] right-[5px] text-3xl text-white bg-warning cursor-pointer rounded-[3px] drop-shadow-lg transition-colors hover:bg-red-500'>
+				className='absolute text-[14px] p-[6px] text-center top-1 left-1 text-3xl text-white bg-warning cursor-pointer rounded-[3px] drop-shadow-lg transition-colors hover:bg-red-500 md:text-[16px] xl:text-[18px] 2xl:text-[20px]'>
 				<FaTrashAlt />
 			</div>
 
@@ -69,7 +75,13 @@ export const AdminProjectCard: React.FC<AdminProjectCardProps> = ({
 					onLoad={() => setIsLoaded(true)}
 				/>
 
-				<div className='swiper-lazy-preloader' />
+				<p
+					className={clsx(
+						'absolute bottom-1 right-1 max-w-[50%] text-[10px] rounded-[3px] p-[2px] truncate text-white font-bold md:text-[12px] xl:text-[14px] 2xl:text-[16px] md:p-[4px] xl:p-[6px]',
+						app === 'pedl' ? 'bg-primary' : 'bg-secondary'
+					)}>
+					{name}
+				</p>
 			</Link>
 		</div>
 	);
