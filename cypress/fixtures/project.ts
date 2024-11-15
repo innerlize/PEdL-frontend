@@ -47,4 +47,8 @@ export const project = {
 		cofcof: false
 	}
 };
+
+export const projectWithToggledVisibility = {
+	...project,
+	visibility: { ...project.visibility, pedl: true }
 };
