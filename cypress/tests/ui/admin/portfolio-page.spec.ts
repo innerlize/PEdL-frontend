@@ -20,6 +20,10 @@ describe('Admin - PortfolioPage', () => {
 			body: projects[0]
 		}).as('GET_SINGLE_PROJECT');
 
+		cy.intercept('PATCH', '/api/projects/*/visibility/*', {
+			statusCode: 200
+		}).as('TOGGLE_PROJECT_VISIBILITY');
+
 		cy.intercept('PATCH', '/api/projects/2/order', {
 			statusCode: 200
 		}).as('REORDER_PROJECTS');
