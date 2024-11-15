@@ -38,6 +38,10 @@ export const projects = [
 		order: {
 			pedl: 1,
 			cofcof: 1
+		},
+		visibility: {
+			pedl: false,
+			cofcof: false
 		}
 	},
 
@@ -79,6 +83,10 @@ export const projects = [
 		order: {
 			pedl: 2,
 			cofcof: 2
+		},
+		visibility: {
+			pedl: false,
+			cofcof: false
 		}
 	},
 
@@ -121,6 +129,10 @@ export const projects = [
 		order: {
 			pedl: 3,
 			cofcof: 3
+		},
+		visibility: {
+			pedl: false,
+			cofcof: false
 		}
 	},
 
@@ -163,6 +175,10 @@ export const projects = [
 		order: {
 			pedl: 4,
 			cofcof: 4
+		},
+		visibility: {
+			pedl: false,
+			cofcof: false
 		}
 	}
 ];
@@ -206,6 +222,10 @@ export const projectCreatedResponse = {
 		order: {
 			pedl: 1,
 			cofcof: 1
+		},
+		visibility: {
+			pedl: false,
+			cofcof: false
 		}
 	}
 };
@@ -252,6 +272,10 @@ export const projectUpdatedResponse = {
 		order: {
 			pedl: 1,
 			cofcof: 1
+		},
+		visibility: {
+			pedl: false,
+			cofcof: false
 		}
 	}
 };
