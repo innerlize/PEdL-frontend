@@ -15,14 +15,14 @@ describe('Admin - PortfolioPage', () => {
 			body: projects
 		}).as('GET_PROJECTS');
 
-		cy.intercept('PATCH', '/api/projects/2/order', {
-			statusCode: 200
-		}).as('REORDER_PROJECTS');
-
 		cy.intercept('GET', '/api/projects/*', {
 			statusCode: 200,
 			body: projects[0]
 		}).as('GET_SINGLE_PROJECT');
+
+		cy.intercept('PATCH', '/api/projects/2/order', {
+			statusCode: 200
+		}).as('REORDER_PROJECTS');
 
 		cy.intercept('DELETE', `/api/projects/*`, {
 			statusCode: 200
