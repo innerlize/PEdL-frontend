@@ -12,6 +12,7 @@ export interface Project {
 	end_date: Timestamp;
 	links?: Link[];
 	order: OrderByApp;
+	visibility: VisibilityByApp;
 }
 
 interface Media {
@@ -27,3 +28,5 @@ export interface Timestamp {
 export type AppName = 'pedl' | 'cofcof';
 
 interface OrderByApp extends Record<AppName, number> {}
+
+interface VisibilityByApp extends Record<AppName, boolean> {}
