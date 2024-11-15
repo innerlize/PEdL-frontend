@@ -14,13 +14,15 @@ interface AdminProjectCardProps {
 	name: string;
 	thumbnail: string;
 	app?: AppName;
+	isVisible: boolean;
 }
 
 export const AdminProjectCard: React.FC<AdminProjectCardProps> = ({
 	id,
 	name,
 	thumbnail,
-	app
+	app,
+	isVisible
 }) => {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const { showModal } = useConfirmModal();
