@@ -21,6 +21,7 @@ import { mapProjectFormValuesToRequest } from '../../../../mappers/projectMapper
 import { convertTimestampToDate } from '../../../../utils/convertTimestampToDate';
 import { Project } from '../../../../types/Portfolio';
 import { AxiosError } from 'axios';
+import { AdminCategoryField } from './Fields/Category';
 
 interface AdminAddProjectFormProps {
 	project?: Project;
@@ -162,6 +163,8 @@ export const AdminAddProjectForm: React.FC<AdminAddProjectFormProps> = ({
 						<AdminMediaField projectId={project?.id ?? ''} />
 
 						<AdminDatesField />
+
+						<AdminCategoryField />
 
 						<AdminLinksField />
 
