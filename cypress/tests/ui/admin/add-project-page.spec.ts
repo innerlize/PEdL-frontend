@@ -89,6 +89,11 @@ describe('Admin - Add Project Page', () => {
 				cy.get('.react-datepicker .react-datepicker__day--007').click();
 			});
 
+		cy.get('[data-test="admin-category-field"]')
+			.should('be.visible')
+			.find('select')
+			.select('Movie');
+
 		cy.get('[data-test="admin-dates-field"] input')
 			.should('be.visible')
 			.last()
