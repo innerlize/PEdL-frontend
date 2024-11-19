@@ -1,5 +1,3 @@
-import { Link } from './Project';
-
 export interface Project {
 	id: string;
 	name: string;
@@ -10,6 +8,7 @@ export interface Project {
 	media?: Media;
 	start_date: Timestamp;
 	end_date: Timestamp;
+	category: Category;
 	links?: Link[];
 	order: OrderByApp;
 	visibility: VisibilityByApp;
@@ -27,6 +26,17 @@ export interface Timestamp {
 
 export type AppName = 'pedl' | 'cofcof';
 
+export enum Category {
+	MOVIE = 'Movie',
+	GAME = 'Game',
+	OTHER = 'other'
+}
+
 interface OrderByApp extends Record<AppName, number> {}
 
 interface VisibilityByApp extends Record<AppName, boolean> {}
+
+interface Link {
+	label: string;
+	url: string;
+}

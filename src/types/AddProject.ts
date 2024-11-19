@@ -1,3 +1,6 @@
+import { Category } from './Portfolio';
+import { Link } from './Project';
+
 export interface ProjectFormFieldsValues extends ProjectFormInitialValues {}
 
 export interface ProjectFormInitialValues {
@@ -14,15 +17,11 @@ export interface ProjectFormInitialValues {
 	videosFiles?: File[];
 	start_date: Date | null;
 	end_date: Date | null;
+	category: Category | null;
 	links?: Link[];
 }
 
 export interface SoftwarePill {
 	name: string;
 	color: string;
-}
-
-interface Link {
-	label: string;
-	url: string;
 }

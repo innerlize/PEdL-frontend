@@ -135,7 +135,8 @@ export const AdminAddProjectForm: React.FC<AdminAddProjectFormProps> = ({
 			: null,
 		end_date: project?.end_date
 			? new Date(convertTimestampToDate(project.end_date))
-			: null
+			: null,
+		category: project?.category || null
 	};
 
 	return (
