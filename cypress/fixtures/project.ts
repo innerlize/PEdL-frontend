@@ -45,7 +45,8 @@ export const project = {
 	visibility: {
 		pedl: false,
 		cofcof: false
-	}
+	},
+	category: 'Movie'
 };
 
 export const projectWithToggledVisibility = {

@@ -42,7 +42,8 @@ export const projects = [
 		visibility: {
 			pedl: false,
 			cofcof: false
-		}
+		},
+		category: 'Movie' // Nueva propiedad
 	},
 
 	{
@@ -87,7 +88,8 @@ export const projects = [
 		visibility: {
 			pedl: false,
 			cofcof: false
-		}
+		},
+		category: 'Game' // Nueva propiedad
 	},
 
 	{
@@ -133,7 +135,8 @@ export const projects = [
 		visibility: {
 			pedl: false,
 			cofcof: false
-		}
+		},
+		category: 'Other' // Nueva propiedad
 	},
 
 	{
@@ -179,7 +182,8 @@ export const projects = [
 		visibility: {
 			pedl: false,
 			cofcof: false
-		}
+		},
+		category: 'Movie' // Nueva propiedad
 	}
 ];
 
@@ -226,7 +230,8 @@ export const projectCreatedResponse = {
 		visibility: {
 			pedl: false,
 			cofcof: false
-		}
+		},
+		category: 'Movie' // Nueva propiedad
 	}
 };
 
@@ -276,6 +281,7 @@ export const projectUpdatedResponse = {
 		visibility: {
 			pedl: false,
 			cofcof: false
-		}
+		},
+		category: 'Game' // Nueva propiedad
 	}
 };
