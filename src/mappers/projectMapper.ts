@@ -23,6 +23,8 @@ export const mapProjectFormValuesToRequest = (
 	formData.append('start_date', values.start_date!.toISOString());
 	formData.append('end_date', values.end_date!.toISOString());
 
+	formData.append('category', values.category!);
+
 	values.links?.forEach((link, index) => {
 		formData.append(`links[${index}][label]`, link.label);
 		formData.append(`links[${index}][url]`, link.url);
