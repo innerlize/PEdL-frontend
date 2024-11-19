@@ -54,6 +54,9 @@ describe('Admin - Add Project Page', () => {
 		cy.get('.text-red-500')
 			.contains('End date is required')
 			.should('be.visible');
+		cy.get('.text-red-500')
+			.contains('Category is required')
+			.should('be.visible');
 	});
 
 	it('should successfully submit the form with valid data', () => {
