@@ -18,7 +18,7 @@ export const AdminCategoryField = () => {
 	const options = ['Movie', 'Game', 'Other'];
 
 	return (
-		<AdminFieldWrapper>
+		<AdminFieldWrapper data-test='admin-category-field'>
 			<AdminInputFieldHeader title={title} helper={helper} required />
 
 			<AdminSelectInputType field={field} options={options} />
