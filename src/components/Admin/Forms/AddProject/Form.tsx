@@ -39,6 +39,7 @@ const validationSchema = Yup.object({
 	imagesFiles: Yup.array().optional(),
 	videosUrls: Yup.array().of(Yup.string().optional()),
 	videosFiles: Yup.array().optional(),
+	category: Yup.string().required('Category is required'),
 	links: Yup.array().of(
 		Yup.object({ label: Yup.string(), src: Yup.string() }).optional()
 	),
