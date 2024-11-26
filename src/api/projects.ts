@@ -56,6 +56,19 @@ export const updateProjectOrder = async (
 	return response.data;
 };
 
+export const updateProjectVisibility = async (
+	id: string,
+	app: AppName,
+	token: string
+): Promise<unknown> =>
+	await apiClient.patch(
+		`/projects/${id}/visibility/${app}`,
+		{},
+		{
+			headers: { Authorization: `Bearer ${token}` }
+		}
+	);
+
 export const deleteProject = async (
 	id: string,
 	token: string

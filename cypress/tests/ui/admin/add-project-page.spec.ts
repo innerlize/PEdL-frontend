@@ -760,7 +760,7 @@ describe('Admin - Add Project Page - Update Project', () => {
 		cy.get('form').should('exist');
 	});
 
-	it.only('should populate form fields with existing project data on load', () => {
+	it('should populate form fields with existing project data on load', () => {
 		const project = projects[0];
 
 		cy.get('input[name="projectName"]').should('have.value', project.name);

@@ -50,6 +50,7 @@ export const AdminProjectsList: React.FC<AdminProjectsListProps> = ({
 													name={project.name}
 													thumbnail={project.thumbnail}
 													app={app}
+													isVisible={project.visibility[app]}
 												/>
 											</li>
 										)}

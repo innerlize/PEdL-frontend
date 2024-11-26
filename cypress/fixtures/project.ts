@@ -37,5 +37,18 @@ export const project = {
 			label: 'Link 2',
 			url: 'https://www.google.com'
 		}
-	]
+	],
+	order: {
+		pedl: 1,
+		cofcof: 1
+	},
+	visibility: {
+		pedl: false,
+		cofcof: false
+	}
+};
+
+export const projectWithToggledVisibility = {
+	...project,
+	visibility: { ...project.visibility, pedl: true }
 };

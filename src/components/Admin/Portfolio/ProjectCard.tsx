@@ -7,19 +7,22 @@ import { deleteProject } from '../../../api/projects';
 import { useAuth } from '../../../hooks/useAuth';
 import clsx from 'clsx';
 import { AppName } from '../../../types/Portfolio';
+import { VisibilityButton } from './VisibilityButton';
 
 interface AdminProjectCardProps {
 	id: string;
 	name: string;
 	thumbnail: string;
 	app?: AppName;
+	isVisible: boolean;
 }
 
 export const AdminProjectCard: React.FC<AdminProjectCardProps> = ({
 	id,
 	name,
 	thumbnail,
-	app
+	app,
+	isVisible
 }) => {
 	const [isLoaded, setIsLoaded] = useState(false);
 	const { showModal } = useConfirmModal();
@@ -64,6 +67,10 @@ export const AdminProjectCard: React.FC<AdminProjectCardProps> = ({
 				onClick={handleShowModal}
 				className='absolute text-[14px] p-[6px] text-center top-1 left-1 text-3xl text-white bg-warning cursor-pointer rounded-[3px] drop-shadow-lg transition-colors hover:bg-red-500 md:text-[16px] xl:text-[18px] 2xl:text-[20px]'>
 				<FaTrashAlt />
+			</div>
+
+			<div className='absolute text-[14px] p-[6px] text-center top-1 right-1 text-3xl text-white bg-neutral cursor-pointer rounded-[3px] drop-shadow-lg transition-colors hover:bg-accent md:text-[16px] xl:text-[18px] 2xl:text-[20px]'>
+				<VisibilityButton id={id} appName={app!} isVisible={isVisible} />
 			</div>
 
 			<Link to={`/admin-panel/project/add`} state={id}>

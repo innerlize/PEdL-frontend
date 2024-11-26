@@ -1,4 +1,5 @@
 import { projects } from '../../../fixtures/projects';
+import { projectWithToggledVisibility } from '../../../fixtures/project';
 
 describe('Admin - PortfolioPage', () => {
 	const firstProjectId = projects[0].id;
@@ -15,14 +16,18 @@ describe('Admin - PortfolioPage', () => {
 			body: projects
 		}).as('GET_PROJECTS');
 
-		cy.intercept('PATCH', '/api/projects/2/order', {
-			statusCode: 200
-		}).as('REORDER_PROJECTS');
-
 		cy.intercept('GET', '/api/projects/*', {
 			statusCode: 200,
 			body: projects[0]
 		}).as('GET_SINGLE_PROJECT');
+
+		cy.intercept('PATCH', '/api/projects/*/visibility/*', {
+			statusCode: 200
+		}).as('TOGGLE_PROJECT_VISIBILITY');
+
+		cy.intercept('PATCH', '/api/projects/2/order', {
+			statusCode: 200
+		}).as('REORDER_PROJECTS');
 
 		cy.intercept('DELETE', `/api/projects/*`, {
 			statusCode: 200
@@ -103,6 +108,38 @@ describe('Admin - PortfolioPage', () => {
 		cy.get('[data-test="pedl-projects-list"] [data-test="projects-list-item"]')
 			.eq(3)
 			.should('contain', projects[1].name);
+	});
+
+	it('should toggle project visibility', () => {
+		cy.intercept('GET', '/api/projects', {
+			statusCode: 200,
+			body: [projectWithToggledVisibility, ...projects.slice(1)]
+		}).as('GET_PROJECTS_WITH_MODIFIED_VISIBILITY');
+
+		cy.get(
+			`[data-test="pedl-projects-list"] [data-test="project-card-${firstProjectId}"]`
+		)
+			.find('[data-test="project-card-visibility-button"]')
+			.then($el => {
+				cy.wrap($el)
+					.find('[data-test="visibility-icon-hidden"]')
+					.should('be.visible');
+			})
+			.click();
+
+		cy.wait('@TOGGLE_PROJECT_VISIBILITY');
+
+		cy.wait('@GET_PROJECTS_WITH_MODIFIED_VISIBILITY');
+
+		cy.get(
+			`[data-test="pedl-projects-list"] [data-test="project-card-${firstProjectId}"]`
+		)
+			.find('[data-test="project-card-visibility-button"]')
+			.then($el => {
+				cy.wrap($el)
+					.find('[data-test="visibility-icon-visible"]')
+					.should('be.visible');
+			});
 	});
 
 	it('should navigate to the edit project form page when a project is clicked', () => {
